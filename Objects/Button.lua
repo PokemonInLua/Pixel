@@ -23,11 +23,10 @@ function Button(args)
 	function self.draw(isPressed, xOffset, yOffset)
 		local finalX = xOffset and (xOffset - 1 + x) or x
 		local finalY = yOffset and (yOffset - 1 + y) or y
-		term.setBackgroundColor(isPressed and backgroundColorOnPress or backgroundColor)
-		for i=finalX,width-1 do
-			term.setCursorPos(i,finalY)
-			term.write(string.rep(" "),width)
-		end
+		paintitils.drawFilledBox(finalX,finalY,finalX+width-1,finalY+height-1,isPressed and backgroundColorOnPress or backgroundColor)
+		term.setCursorPos(finalX+xText-1,finalY+yText-1)
+		term.setTextColor(isPressed and textColorOnPress or textColor)
+		term.write(text)
 	end
 	function self.onRightClick()
 		onRightClick()
@@ -35,8 +34,37 @@ function Button(args)
 	function self.onLeftClick()
 		onLeftClick()
 	end
-	function self.move(x,y)
-
+	function self.move(xNew,yNew)
+		x = xNew
+		y = yNew
 	end
-	--Constuctor--
+	function self.get()
+		return = {
+			x = x,
+			y = y,
+			width = width,
+			height = height,
+			text = text,
+			textColor = textColor,
+			backgroundColor = backgroundColor,
+			textColorOnPress = textColorOnPress,
+			backgroundColorOnPress = backgroundColorOnPress,
+			onRightClick = onRightClick,
+			onLeftClick = onLeftClick
+		}
+	end
+	function self.set(targs)
+		x = targs.x
+		y = targs.y
+		width = targs.width
+		height = targs.height
+		text = targs.text
+		textColor = targs.textColor
+		backgroundColor = targs.backgroundColor
+		textColorOnPress = targs.textColorOnPress
+		backgroundColorOnPress = targs.backgroundColorOnPress
+		onRightClick = targs.onRightClick
+		onLeftClick = targs.onLeftClick
+	end
+	return self
 end

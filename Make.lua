@@ -18,12 +18,12 @@ local function readf(path)
 end
 
 local function add(txt)
-	final = final..(not final == "" and "\n\n" or "")..txt
+	final = final.."\n\n"..txt
 end
 
 local function explore(path)
 	for i,v in pairs(fs.list(path)) do
-		local fpath = v.."/"..path
+		local fpath = path.."/"..v
 		if fs.isDir(fpath) then
 			explore(fpath)
 		else
@@ -40,7 +40,7 @@ local file = fs.open("/Pixel/Builds/"..tArgs[1],"w")
 file.write(final)
 file.close()
 
-local file = fs.open("Pixel/Builds/"..tArgs[1],"w")
+local file = fs.open("Pixel/Pixel","w")
 file.write(final)
 file.close()
 
