@@ -18,7 +18,7 @@ local function readf(path)
 end
 
 local function add(txt)
-	final = final.."\n\n"..txt
+	final = final..(not final == "" and "\n\n" or "")..txt
 end
 
 local function explore(path)
