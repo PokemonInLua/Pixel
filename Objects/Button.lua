@@ -54,17 +54,17 @@ function Button(args)
 		}
 	end
 	function self.set(targs)
-		x = targs.x
-		y = targs.y
-		width = targs.width
-		height = targs.height
-		text = targs.text
-		textColor = targs.textColor
-		backgroundColor = targs.backgroundColor
-		textColorOnPress = targs.textColorOnPress
-		backgroundColorOnPress = targs.backgroundColorOnPress
-		onRightClick = targs.onRightClick
-		onLeftClick = targs.onLeftClick
+		x = targs.x or x
+		y = targs.y or y
+		width = targs.width or width
+		height = targs.height or height
+		text = targs.text or text
+		textColor = targs.textColor or textColor
+		backgroundColor = targs.backgroundColor or backgroundColor
+		textColorOnPress = targs.textColorOnPress or textColorOnPress
+		backgroundColorOnPress = targs.backgroundColorOnPress or backgroundColorOnPress
+		onRightClick = targs.onRightClick or onRightClick
+		onLeftClick = targs.onLeftClick or onLeftClick
 	end
 	return self
 end
