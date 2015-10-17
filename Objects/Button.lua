@@ -40,6 +40,7 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 		x = xNew
 		y = yNew
 	end
+	function 
 	function self.get(ser)
 		return {
 			x = x,
@@ -69,8 +70,8 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 		backgroundColor = targs.backgroundColor or backgroundColor
 		textColorOnPress = targs.textColorOnPress or textColorOnPress
 		backgroundColorOnPress = targs.backgroundColorOnPress or backgroundColorOnPress
-		onRightClick = targs.onRightClick or onRightClick
-		onLeftClick = targs.onLeftClick or onLeftClick
+		onRightClick = targs.onRightClick and (type(targs.onRightClick) == "string" and (function() k,func = loadstring(targs.onRightClick) if not k then return function()end else setfenv(func,_G) end return func end)() or targs.onRightClick) or onRightClick
+		onLeftClick = targs.onLeftClick and (type(targs.onLeftClick) == "string" and (function() k,func = loadstring(targs.onLeftClick) if not k then return function()end else setfenv(func,_G) end return func end)() or targs.onLeftClick) or onLeftClick
 	end
 	return self
 end
