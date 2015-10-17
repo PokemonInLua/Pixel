@@ -1,0 +1,72 @@
+
+
+--[[
+	Name: Pixel
+	Author: Wassil Janssen a.k.a. Creator
+	Licence: GNU GENERAL PUBLIC LICENSE
+	Description: A GUI library specifically written for ComputerCraft
+]]--
+
+
+
+--[[
+	Name: Button
+	Author: Wassil Janssen a.k.a. Creator
+	Licence: GNU GENERAL PUBLIC LICENSE
+	Description: The button module
+]]--
+
+function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,textColorOnPress,backgroundColorOnPress,onRightClick,onLeftClick)
+	--Private--
+	local x = x or 1
+	local y = y or 4
+	local width = width or 11
+	local height = height or 3
+	local xText = xText or 2
+	local yText = yText or 2
+	local text = text or "I, button"
+	local textColor = textColor or colors.black
+	local backgroundColor = backgroundColor or colors.white
+	local textColorOnPress = textColorOnPress or colors.white
+	local backgroundColorOnPress = backgroundColorOnPress or colors.black
+	local onRightClick = onRightClick or  function() end
+	local onLeftClick = onLeftClick or function() end
+	--Public--
+	local self = {}
+	function self.draw(isPressed, xOffset, yOffset)
+		local finalX = xOffset and (xOffset - 1 + x) or x
+		local finalY = yOffset and (yOffset - 1 + y) or y
+		--term.setBackgroundColor(isPressed and backgroundColorOnPress or backgroundColor)
+		paintutils.drawFilledBox(finalX,finalY,finalX+width-1,finalY+height-1,isPressed and backgroundColorOnPress or backgroundColor)
+		term.setCursorPos(finalX+xText-1,finalY+yText-1)
+		term.setTextColor(isPressed and textColorOnPress or textColor)
+		term.write(text)
+	end
+	function self.onRightClick()
+		onRightClick()
+	end
+	function self.onLeftClick()
+		onLeftClick()
+	end
+	function self.move(x,y)
+
+	end
+	return self
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
