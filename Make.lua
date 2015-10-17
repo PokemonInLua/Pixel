@@ -45,7 +45,7 @@ file.write(final)
 file.close()
 
 if tArgs[2] then
-	local file = fs.open("Build","w")
+	local file = fs.open("Pixel/Build","w")
 	file.write(tArgs[1])
 	file.close()
 end
