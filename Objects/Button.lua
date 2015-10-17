@@ -38,7 +38,7 @@ function Button(args)
 		x = xNew
 		y = yNew
 	end
-	function self.get()
+	function self.get(ser)
 		return {
 			x = x,
 			y = y,
@@ -49,8 +49,8 @@ function Button(args)
 			backgroundColor = backgroundColor,
 			textColorOnPress = textColorOnPress,
 			backgroundColorOnPress = backgroundColorOnPress,
-			onRightClick = onRightClick,
-			onLeftClick = onLeftClick
+			onRightClick = ser and string.dump(onRightClick) or onRightClick,
+			onLeftClick = ser and string.dump(onLeftClick) or onLeftClick
 		}
 	end
 	function self.set(targs)
