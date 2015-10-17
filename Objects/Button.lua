@@ -40,7 +40,10 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 		x = xNew
 		y = yNew
 	end
-	function 
+	function self.resize(w,h)
+		width = w
+		height = h
+	end
 	function self.get(ser)
 		return {
 			x = x,
