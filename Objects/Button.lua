@@ -7,17 +7,17 @@
 
 function Button(args)
 	--Private--
-	local x = 1
-	local y = 1
-	local width = 11
-	local height = 3
-	local text = "I, button"
-	local textColor = colors.black
-	local backgroundColor = colors.white
-	local textColorOnPress = colors.white
-	local backgroundColorOnPress = colors.black
-	local onRightClick = function() end
-	local onLeftClick = function() end
+	local x = x or 1
+	local y = y or 1
+	local width = width or 11
+	local height = height or 3
+	local text = text or "I, button"
+	local textColor = textColor or colors.black
+	local backgroundColor = backgroundColor or colors.white
+	local textColorOnPress = textColorOnPress or colors.white
+	local backgroundColorOnPress = backgroundColorOnPress or colors.black
+	local onRightClick = onRightClick or function() end
+	local onLeftClick = onLeftClick or function() end
 	--Public--
 	local self = {}
 	function self.draw(isPressed, xOffset, yOffset)
@@ -39,7 +39,7 @@ function Button(args)
 		y = yNew
 	end
 	function self.get()
-		return = {
+		return {
 			x = x,
 			y = y,
 			width = width,
