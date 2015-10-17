@@ -78,8 +78,8 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 		backgroundColorOnPress = targs.backgroundColorOnPress or backgroundColorOnPress
 		onRightClick = targs.onRightClick and (type(targs.onRightClick) == "string" and (function() k,func = loadstring(targs.onRightClick) if not k then return function()end else setfenv(func,_G) end return func end)() or targs.onRightClick) or onRightClick
 		onLeftClick = targs.onLeftClick and (type(targs.onLeftClick) == "string" and (function() k,func = loadstring(targs.onLeftClick) if not k then return function()end else setfenv(func,_G) end return func end)() or targs.onLeftClick) or onLeftClick
-		setfenv(onRightClick,getfenv())
-		setfenv(onLeftClick,getfenv())
+		setfenv(onRightClick,getfenv(self.set))
+		setfenv(onLeftClick,getfenv(self.set))
 	end
 	function self.addEvent(event,func)
 		if events[event] then
@@ -92,6 +92,7 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 		local finalX = xOffset and (xOffset - 1 + x) or x
 		local finalY = yOffset and (yOffset - 1 + y) or y
 		while true do
+			self.draw(false,xOffset,yOffset)
 			e = {os.pullEvent()}
 			if events[e] then
 				for i,v in pairs(events[e]) do
@@ -100,6 +101,7 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 			end
 			if e[1] == "mouse_click" then
 				if finalX <= e[3] and e[3] <= finalX+width-1 and finalY <= e[4] and e[4] <= finalY+height-1 then
+					self.draw(true,xOffset,yOffset)
 					if e[2] == 1 then
 						onLeftClick()
 					elseif e[2] == 2 then

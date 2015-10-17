@@ -15,4 +15,4 @@ input = {
 	onRightClick = function() term.setCursorPos(20,13) print("wow") end,
 }
 button.set(input)
-button.draw()
+button.run()
