@@ -5,12 +5,14 @@
 	Description: The button module
 ]]--
 
-function Button(args)
+function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,textColorOnPress,backgroundColorOnPress,onRightClick,onLeftClick)
 	--Private--
 	local x = x or 1
 	local y = y or 1
 	local width = width or 11
 	local height = height or 3
+	local xText = xText or 2
+	local yText = yText or 2
 	local text = text or "I, button"
 	local textColor = textColor or colors.black
 	local backgroundColor = backgroundColor or colors.white
@@ -23,7 +25,7 @@ function Button(args)
 	function self.draw(isPressed, xOffset, yOffset)
 		local finalX = xOffset and (xOffset - 1 + x) or x
 		local finalY = yOffset and (yOffset - 1 + y) or y
-		paintitils.drawFilledBox(finalX,finalY,finalX+width-1,finalY+height-1,isPressed and backgroundColorOnPress or backgroundColor)
+		paintutils.drawFilledBox(finalX,finalY,finalX+width-1,finalY+height-1,isPressed and backgroundColorOnPress or backgroundColor)
 		term.setCursorPos(finalX+xText-1,finalY+yText-1)
 		term.setTextColor(isPressed and textColorOnPress or textColor)
 		term.write(text)
@@ -44,6 +46,8 @@ function Button(args)
 			y = y,
 			width = width,
 			height = height,
+			xText = xText,
+			yText = yText,
 			text = text,
 			textColor = textColor,
 			backgroundColor = backgroundColor,
@@ -58,6 +62,8 @@ function Button(args)
 		y = targs.y or y
 		width = targs.width or width
 		height = targs.height or height
+		xText = targs.xText or xText
+		yText = targs.yText or yText
 		text = targs.text or text
 		textColor = targs.textColor or textColor
 		backgroundColor = targs.backgroundColor or backgroundColor

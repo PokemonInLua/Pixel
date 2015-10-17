@@ -18,23 +18,23 @@
 
 function Button(args)
 	--Private--
-	local x = 1
-	local y = 1
-	local width = 11
-	local height = 3
-	local text = "I, button"
-	local textColor = colors.black
-	local backgroundColor = colors.white
-	local textColorOnPress = colors.white
-	local backgroundColorOnPress = colors.black
-	local onRightClick = function() end
-	local onLeftClick = function() end
+	local x = x or 1
+	local y = y or 1
+	local width = width or 11
+	local height = height or 3
+	local text = text or "I, button"
+	local textColor = textColor or colors.black
+	local backgroundColor = backgroundColor or colors.white
+	local textColorOnPress = textColorOnPress or colors.white
+	local backgroundColorOnPress = backgroundColorOnPress or colors.black
+	local onRightClick = onRightClick or function() end
+	local onLeftClick = onLeftClick or function() end
 	--Public--
 	local self = {}
 	function self.draw(isPressed, xOffset, yOffset)
 		local finalX = xOffset and (xOffset - 1 + x) or x
 		local finalY = yOffset and (yOffset - 1 + y) or y
-		paintitils.drawFilledBox(finalX,finalY,finalX+width-1,finalY+height-1,isPressed and backgroundColorOnPress or backgroundColor)
+		paintutils.drawFilledBox(finalX,finalY,finalX+width-1,finalY+height-1,isPressed and backgroundColorOnPress or backgroundColor)
 		term.setCursorPos(finalX+xText-1,finalY+yText-1)
 		term.setTextColor(isPressed and textColorOnPress or textColor)
 		term.write(text)
@@ -49,8 +49,8 @@ function Button(args)
 		x = xNew
 		y = yNew
 	end
-	function self.get()
-		return = {
+	function self.get(ser)
+		return {
 			x = x,
 			y = y,
 			width = width,
@@ -60,22 +60,22 @@ function Button(args)
 			backgroundColor = backgroundColor,
 			textColorOnPress = textColorOnPress,
 			backgroundColorOnPress = backgroundColorOnPress,
-			onRightClick = onRightClick,
-			onLeftClick = onLeftClick
+			onRightClick = ser and string.dump(onRightClick) or onRightClick,
+			onLeftClick = ser and string.dump(onLeftClick) or onLeftClick
 		}
 	end
 	function self.set(targs)
-		x = targs.x
-		y = targs.y
-		width = targs.width
-		height = targs.height
-		text = targs.text
-		textColor = targs.textColor
-		backgroundColor = targs.backgroundColor
-		textColorOnPress = targs.textColorOnPress
-		backgroundColorOnPress = targs.backgroundColorOnPress
-		onRightClick = targs.onRightClick
-		onLeftClick = targs.onLeftClick
+		x = targs.x or x
+		y = targs.y or y
+		width = targs.width or width
+		height = targs.height or height
+		text = targs.text or text
+		textColor = targs.textColor or textColor
+		backgroundColor = targs.backgroundColor or backgroundColor
+		textColorOnPress = targs.textColorOnPress or textColorOnPress
+		backgroundColorOnPress = targs.backgroundColorOnPress or backgroundColorOnPress
+		onRightClick = targs.onRightClick or onRightClick
+		onLeftClick = targs.onLeftClick or onLeftClick
 	end
 	return self
 end
