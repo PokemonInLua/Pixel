@@ -1,11 +1,11 @@
 --[[
-	Name: Image
+	Name: 
 	Author: Wassil Janssen a.k.a. Creator
 	Licence: GNU GENERAL PUBLIC LICENSE
-	Description: An image drawer
+	Description:
 ]]--
 
-function Image(x,y,path)
+function Name(x,y)
 	--Private
 	local x = x or 1
 	local y = y or 1
@@ -13,11 +13,10 @@ function Image(x,y,path)
 	local yOffset = 0
 	local finalX = xOffset + x
 	local finalY = yOffset + y
-	local data = paintutils.loadImage(path)
 	--Public
 	local self = {}
-	function self.draw()
-		paintutils.drawImage(data,finalX,finalY)
+	function self.draw(isPressed)
+
 	end
 	function self.move(xNew,yNew)
 		x = xNew
