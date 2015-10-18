@@ -49,5 +49,11 @@ function Image(x,y,path)
 		finalX = xOffset + x
 		finalY = yOffset + y
 	end
+	function self.getType()
+		return "Image"
+	end
+	function self.event(...)
+
+	end
 	return self
 end

@@ -138,5 +138,21 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 			return true
 		end
 	end
+	function self.getType()
+		return "Button"
+	end
+	function self.event(...)
+		e = {...}
+		if e[1] == "mouse_click" then
+			if finalX <= e[3] and e[3] <= finalX+width-1 and finalY <= e[4] and e[4] <= finalY+height-1 then
+				self.draw(true,xOffset,yOffset)
+				if e[2] == 1 then
+					onLeftClick(self)
+				elseif e[2] == 2 then
+					onRightClick(self)
+				end
+			end
+		end
+	end
 	return self
 end
