@@ -32,6 +32,11 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 	local backgroundColorOnPress = backgroundColorOnPress or colors.black
 	local onRightClick = onRightClick or function()end
 	local onLeftClick = onLeftClick or function()end
+	local xOffset = 0
+	local yOffset = 0
+	local finalX = xOffset + x
+	local finalY = yOffset + y
+
 	local env = {
 		events = {},
 		x = x,
@@ -51,9 +56,7 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 
 	--Public--
 	local self = {}
-	function self.draw(isPressed, xOffset, yOffset)
-		local finalX = xOffset and (xOffset - 1 + x) or x
-		local finalY = yOffset and (yOffset - 1 + y) or y
+	function self.draw(isPressed)
 		paintutils.drawFilledBox(finalX,finalY,finalX+width-1,finalY+height-1,isPressed and backgroundColorOnPress or backgroundColor)
 		term.setCursorPos(finalX+xText-1,finalY+yText-1)
 		term.setTextColor(isPressed and textColorOnPress or textColor)
@@ -110,9 +113,13 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 			events[event][1] = func
 		end
 	end
-	function self.run(stop,xOffset,yOffset)
-		local finalX = xOffset and (xOffset - 1 + x) or x
-		local finalY = yOffset and (yOffset - 1 + y) or y
+	function self.setOffset(xOffsetT,yOffsetT)
+		xOffset = xOffsetT
+		yOffset = yOffsetT
+		finalX = xOffset + x
+		finalY = yOffset + y
+	end
+	function self.run(stop)
 		while true do
 			self.draw(false,xOffset,yOffset)
 			e = {os.pullEvent()}
