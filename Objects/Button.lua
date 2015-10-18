@@ -89,8 +89,8 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 		backgroundColor = targs.backgroundColor or backgroundColor
 		textColorOnPress = targs.textColorOnPress or textColorOnPress
 		backgroundColorOnPress = targs.backgroundColorOnPress or backgroundColorOnPress
-		onRightClick = targs.onRightClick
-		onLeftClick = targs.onLeftClick
+		onRightClick = targs.onRightClick or onRightClick
+		onLeftClick = targs.onLeftClick or onLeftClick
 	end
 	function self.addEvent(event,func)
 		if events[event] then
@@ -114,7 +114,6 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 				if finalX <= e[3] and e[3] <= finalX+width-1 and finalY <= e[4] and e[4] <= finalY+height-1 then
 					self.draw(true,xOffset,yOffset)
 					if e[2] == 1 then
-						print(type(onLeftClick))
 						onLeftClick(self)
 					elseif e[2] == 2 then
 						onRightClick(self)
