@@ -13,7 +13,7 @@ function Image(x,y,path)
 	local yOffset = 0
 	local finalX = xOffset + x
 	local finalY = yOffset + y
-	local data = paintutils.loadImage(path)
+	local data = fs.exists(path) and paintutils.loadImage(path) or {{16384}}
 	--Public
 	local self = {}
 	function self.draw()
