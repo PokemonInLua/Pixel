@@ -12,8 +12,9 @@ input = {
 	backgroundColor = colors.black,
 	textColorOnPress = colors.white,
 	backgroundColorOnPress = colors.cyan,
-	onLeftClick = "term.setCursorPos(20,13) print(\"wow\")",
-	onRightClick = "term.clear() backgroundColor = math.random(1,15)^2"
+	onLeftClick = function(self) term.clear() term.setCursorPos(1,1) print(backgroundColor) end,
+	onRightClick = function(self) term.clear() backgroundColor = 2^math.random(1,15) 
+	self.draw(false,xOffset,yOffset) end,
 }
 button.set(input)
 button.run()

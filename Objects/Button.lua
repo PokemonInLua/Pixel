@@ -37,9 +37,6 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 		onRightClick = onRightClick,
 		onLeftClick = onLeftClick,
 	}
-	setmetatable(env,{__index = _G})
-	setfenv(onRightClick,env)
-	setfenv(onLeftClick,env)
 
 	--Public--
 	local self = {}
@@ -92,12 +89,8 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 		backgroundColor = targs.backgroundColor or backgroundColor
 		textColorOnPress = targs.textColorOnPress or textColorOnPress
 		backgroundColorOnPress = targs.backgroundColorOnPress or backgroundColorOnPress
-		if targs.onRightClick then
-			setfenv(tagrs.onRightClick,env)
-		end
-		if targs.onLeftClick then
-			setfenv(teargs.onLeftClick,env)
-		end
+		onRightClick = targs.onRightClick
+		onLeftClick = targs.onLeftClick
 	end
 	function self.addEvent(event,func)
 		if events[event] then
@@ -122,9 +115,9 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 					self.draw(true,xOffset,yOffset)
 					if e[2] == 1 then
 						print(type(onLeftClick))
-						onLeftClick()
+						onLeftClick(self)
 					elseif e[2] == 2 then
-						onRightClick()
+						onRightClick(self)
 					end
 				end
 			end
