@@ -49,10 +49,10 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 		term.write(text)
 	end
 	function self.onRightClick()
-		onRightClick()
+		onRightClick(self)
 	end
 	function self.onLeftClick()
-		onLeftClick()
+		onLeftClick(self)
 	end
 	function self.move(xNew,yNew)
 		x = xNew
