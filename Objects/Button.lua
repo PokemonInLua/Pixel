@@ -60,6 +60,8 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 	function self.move(xNew,yNew)
 		x = xNew
 		y = yNew
+		finalX = xOffset + x
+		finalY = yOffset + y
 	end
 	function self.resize(w,h)
 		width = w

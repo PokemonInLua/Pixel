@@ -12,8 +12,8 @@ input = {
 	backgroundColor = colors.black,
 	textColorOnPress = colors.white,
 	backgroundColorOnPress = colors.cyan,
-	onLeftClick = function(self) term.clear() self.set({textColor = 2^math.random(1,15)}) end,
-	onRightClick = function(self) term.clear() self.set({backgroundColor = 2^math.random(1,15)}) end,
+	onLeftClick = function(self) term.clear() self.move(math.random(1,40),math.random(1,10)) end,
+	onRightClick = function(self) term.clear() self.resize(math.random(4,10),math.random(3,10)) end,
 }
 button.set(input)
 button.run()
