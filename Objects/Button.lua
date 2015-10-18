@@ -51,11 +51,11 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 		term.setTextColor(isPressed and textColorOnPress or textColor)
 		term.write(text)
 	end
-	function self.onRightClick()
-		onRightClick(self)
+	function self.onRightClick(...)
+		onRightClick(self,...)
 	end
-	function self.onLeftClick()
-		onLeftClick(self)
+	function self.onLeftClick(...)
+		onLeftClick(self,...)
 	end
 	function self.move(xNew,yNew)
 		x = xNew
@@ -129,6 +129,11 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 					end
 				end
 			end
+		end
+	end
+	function self.isPressed(x,y)
+		if finalX <= e[3] and e[3] <= finalX+width-1 and finalY <= e[4] and e[4] <= finalY+height-1 then
+			return true
 		end
 	end
 	return self
