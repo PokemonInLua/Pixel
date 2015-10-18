@@ -96,6 +96,8 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 		backgroundColorOnPress = targs.backgroundColorOnPress or backgroundColorOnPress
 		onRightClick = targs.onRightClick or onRightClick
 		onLeftClick = targs.onLeftClick or onLeftClick
+		finalX = xOffset + x
+		finalY = yOffset + y
 	end
 	function self.addEvent(event,func)
 		if events[event] then
