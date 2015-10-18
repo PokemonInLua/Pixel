@@ -19,16 +19,28 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 	local backgroundColor = backgroundColor or colors.white
 	local textColorOnPress = textColorOnPress or colors.white
 	local backgroundColorOnPress = backgroundColorOnPress or colors.black
+	local onRightClick = onRightClick or function()end
+	local onLeftClick = onLeftClick or function()end
+	local env = {
+		events = {},
+		x = x,
+		y = y,
+		width = width,
+		height = height,
+		xText = xText,
+		yText = yText,
+		text = text,
+		textColor = textColor,
+		backgroundColor = backgroundColor,
+		textColorOnPress = textColorOnPress,
+		backgroundColorOnPress = backgroundColorOnPress,
+		onRightClick = onRightClick,
+		onLeftClick = onLeftClick,
+	}
+	setmetatable(env,{__index = _G})
+	setfenv(onRightClick,env)
+	setfenv(onLeftClick,env)
 
-	local onRightClick = onRightClick or ""
-	local onLeftClick = onLeftClick or ""
-
-	k,onRightClick = loadstring(onRightClick)
-	if not k then onRightClick = function()end end
-	k,onLeftClick = loadstring(onLeftClick)
-	if not k then onLeftClick = function()end end
-	setfenv(onRightClick,getfenv())
-	setfenv(onLeftClick,getfenv())
 	--Public--
 	local self = {}
 	function self.draw(isPressed, xOffset, yOffset)
@@ -81,16 +93,10 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 		textColorOnPress = targs.textColorOnPress or textColorOnPress
 		backgroundColorOnPress = targs.backgroundColorOnPress or backgroundColorOnPress
 		if targs.onRightClick then
-			print(targs.onRightClick)
-			k,onRightClick = loadstring(targs.onRightClick)
-			if not k then onRightClick = function()end end
-			setfenv(onRightClick,getfenv())
+			setfenv(tagrs.onRightClick,env)
 		end
 		if targs.onLeftClick then
-			print(targs.onLeftClick)
-			k,onLeftClick = loadstring(targs.onLeftClick)
-			if not k then onLeftClick = function()end end
-			setfenv(onLeftClick,getfenv())
+			setfenv(teargs.onLeftClick,env)
 		end
 	end
 	function self.addEvent(event,func)
