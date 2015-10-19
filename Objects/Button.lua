@@ -26,23 +26,6 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 	local finalY = yOffset + y
 	local parent = {}
 
-	local env = {
-		events = {},
-		x = x,
-		y = y,
-		width = width,
-		height = height,
-		xText = xText,
-		yText = yText,
-		text = text,
-		textColor = textColor,
-		backgroundColor = backgroundColor,
-		textColorOnPress = textColorOnPress,
-		backgroundColorOnPress = backgroundColorOnPress,
-		onRightClick = onRightClick,
-		onLeftClick = onLeftClick,
-	}
-
 	--Public--
 	local self = {}
 	function self.draw(isPressed)
@@ -50,12 +33,6 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 		term.setCursorPos(finalX+xText-1,finalY+yText-1)
 		term.setTextColor(isPressed and textColorOnPress or textColor)
 		term.write(text)
-	end
-	function self.onRightClick(...)
-		return onRightClick(self,...)
-	end
-	function self.onLeftClick(...)
-		return onLeftClick(self,...)
 	end
 	function self.move(xNew,yNew)
 		x = xNew
@@ -105,17 +82,19 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 		finalX = xOffset + x
 		finalY = yOffset + y
 	end
-	function self.isPressed(x,y)
-		if finalX <= e[3] and e[3] <= finalX+width-1 and finalY <= e[4] and e[4] <= finalY+height-1 then
-			return true
+	function self.event(e)
+		if e[1] == "mouse_click" then
+			if finalX <= e[3] and e[3] <= finalX+width-1 and finalY <= e[4] and e[4] <= finalY+height-1 then
+				return true
+			end
 		end
 	end
 	self.type = "Button"
 	self.canRun = false
-	function self.callParent()
-
+	function self.callParent(method,...)
+		parent[method](...)
 	end
-	function self.addParent(par)
+	function self.setParent(par)
 		parent = par
 	end
 	return self

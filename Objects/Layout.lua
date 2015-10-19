@@ -5,20 +5,29 @@
 	Description: A container for other objects
 ]]--
 
-function Layout(x,y)
+function Layout(x,y,width,height,color,transparent,isActive)
 	--Private
 	local x = x or 1
 	local y = y or 1
+	local width = width or 10
+	local height = height or 10
+	local color = color or colors.white
+	local transparent = transparent or false
 	local xOffset = 0
 	local yOffset = 0
 	local finalX = xOffset + x
 	local finalY = yOffset + y
 	local children = {}
-	local doRun = true
+	local isActive = isActive or true
+	local parent = {}
 
 	--Public
 	local self = {}
 	function self.draw(isPressed)
+		if not isActive then return end
+		if not transparent then
+			paintutils.drawFilledBox(finalX,finalY,finalX+width-1,finalY+height-1,color)
+		end
 		for i,v in pairs(children) do
 			for k,m in pairs(v) do
 				m.setOffset(finalX-1,finalY-1)
@@ -34,21 +43,24 @@ function Layout(x,y)
 	end
 	function self.get(ser)
 		return {
-			x = x,
-			y = y,
-			text = text,
-			textColor = textColor,
-			backgroundColor = backgroundColor,
-			children = children,
+			x = x or 1
+			y = y or 1
+			width = width,
+			height = height,
+			color = color,
+			transparent = transparent,
+			isActive = isActive,
 		}
 	end
 	function self.set(targs)
 		x = targs.x or x
 		y = targs.y or y
-		text = targs.text or text
-		textColor = targs.textColor or textColor
-		backgroundColor = targs.backgroundColor or backgroundColor
+		width = targs.width or width
+		height = targs.height or height
+		color = targs.color or color
+		transparent = targs.transparent or transparent
 		children = targs.children or children
+		isActive = targs.isActive or isActive
 		finalX = xOffset + x
 		finalY = yOffset + y
 	end
@@ -60,11 +72,18 @@ function Layout(x,y)
 	end
 	self.type = "Layout"
 	function self.event(...)
+		if not isActive then return end
 		for i,v in pairs(children) do
 			for k,m in pairs(v) do
 				m.event(...)
 			end
 		end
+	end
+	function self.setParent(par)
+		parent = par
+	end
+	function self.callParent(method,...)
+		parent[method](...)
 	end
 	function self.addChild(kid)
 		local typ = kid.type
@@ -72,9 +91,7 @@ function Layout(x,y)
 			children[typ] = {}
 		end
 		children[typ][#children[typ]+1] = kid
-	end
-	function self.run()
-
+		children[typ][#children[typ]].setParent(self)
 	end
 	return self
 end
