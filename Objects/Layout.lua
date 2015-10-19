@@ -14,6 +14,7 @@ function Layout(x,y)
 	local finalX = xOffset + x
 	local finalY = yOffset + y
 	local children = {}
+	local doRun = true
 
 	--Public
 	local self = {}
@@ -57,9 +58,7 @@ function Layout(x,y)
 		finalX = xOffset + x
 		finalY = yOffset + y
 	end
-	function self.getType()
-		return "Layout"
-	end
+	self.type = "Layout"
 	function self.event(...)
 		for i,v in pairs(children) do
 			for k,m in pairs(v) do
@@ -68,7 +67,7 @@ function Layout(x,y)
 		end
 	end
 	function self.addChild(kid)
-		local typ = kid.getType()
+		local typ = kid.type
 		if not children[typ] then
 			children[typ] = {}
 		end

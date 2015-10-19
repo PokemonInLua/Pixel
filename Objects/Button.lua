@@ -7,7 +7,6 @@
 
 function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,textColorOnPress,backgroundColorOnPress,onRightClick,onLeftClick)
 	--Private--
-	local events = {}
 	local x = x or 1
 	local y = y or 1
 	local width = width or 11
@@ -25,6 +24,7 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 	local yOffset = 0
 	local finalX = xOffset + x
 	local finalY = yOffset + y
+	local parent = {}
 
 	local env = {
 		events = {},
@@ -52,10 +52,10 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 		term.write(text)
 	end
 	function self.onRightClick(...)
-		onRightClick(self,...)
+		return onRightClick(self,...)
 	end
 	function self.onLeftClick(...)
-		onLeftClick(self,...)
+		return onLeftClick(self,...)
 	end
 	function self.move(xNew,yNew)
 		x = xNew
@@ -99,60 +99,24 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 		finalX = xOffset + x
 		finalY = yOffset + y
 	end
-	function self.addEvent(event,func)
-		if events[event] then
-			events[event][#events[event]+1] = func
-		else
-			events[event][1] = func
-		end
-	end
 	function self.setOffset(xOffsetT,yOffsetT)
 		xOffset = xOffsetT
 		yOffset = yOffsetT
 		finalX = xOffset + x
 		finalY = yOffset + y
 	end
-	function self.run(stop)
-		while true do
-			self.draw(false,xOffset,yOffset)
-			e = {os.pullEvent()}
-			if events[e] then
-				for i,v in pairs(events[e]) do
-					v(unpack(e))
-				end
-			end
-			if e[1] == "mouse_click" then
-				if finalX <= e[3] and e[3] <= finalX+width-1 and finalY <= e[4] and e[4] <= finalY+height-1 then
-					self.draw(true,xOffset,yOffset)
-					if e[2] == 1 then
-						onLeftClick(self)
-					elseif e[2] == 2 then
-						onRightClick(self)
-					end
-				end
-			end
-		end
-	end
 	function self.isPressed(x,y)
 		if finalX <= e[3] and e[3] <= finalX+width-1 and finalY <= e[4] and e[4] <= finalY+height-1 then
 			return true
 		end
 	end
-	function self.getType()
-		return "Button"
+	self.type = "Button"
+	self.canRun = false
+	function self.callParent()
+
 	end
-	function self.event(...)
-		e = {...}
-		if e[1] == "mouse_click" then
-			if finalX <= e[3] and e[3] <= finalX+width-1 and finalY <= e[4] and e[4] <= finalY+height-1 then
-				self.draw(true,xOffset,yOffset)
-				if e[2] == 1 then
-					onLeftClick(self)
-				elseif e[2] == 2 then
-					onRightClick(self)
-				end
-			end
-		end
+	function self.addParent(par)
+		parent = par
 	end
 	return self
 end
