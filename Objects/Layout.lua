@@ -24,14 +24,15 @@ function Layout(x,y,width,height,color,transparent,isActive)
 	--Public
 	local self = {}
 	function self.draw(isPressed)
-		if not isActive then return end
-		if not transparent then
-			paintutils.drawFilledBox(finalX,finalY,finalX+width-1,finalY+height-1,color)
-		end
-		for i,v in pairs(children) do
-			for k,m in pairs(v) do
-				m.setOffset(finalX-1,finalY-1)
-				m.draw()
+		if isActive then
+			if not transparent then
+				paintutils.drawFilledBox(finalX,finalY,finalX+width-1,finalY+height-1,color)
+			end
+			for i,v in pairs(children) do
+				for k,m in pairs(v) do
+					m.setOffset(finalX-1,finalY-1)
+					m.draw()
+				end
 			end
 		end
 	end
@@ -43,8 +44,8 @@ function Layout(x,y,width,height,color,transparent,isActive)
 	end
 	function self.get(ser)
 		return {
-			x = x or 1
-			y = y or 1
+			x = x,
+			y = y,
 			width = width,
 			height = height,
 			color = color,

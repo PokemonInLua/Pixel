@@ -15,7 +15,7 @@ input = {
 	textColorOnPress = colors.white,
 	backgroundColorOnPress = colors.cyan,
 	onLeftClick = function(self) term.clear() self.move(math.random(1,40),math.random(1,10)) end,
-	onRightClick = function(self) term.clear() self.callParent() end,
+	onRightClick = function(self) term.clear() self.callParent("set",{isActive = false}) end,
 }
 button.set(input)
 lay.addChild(button)
