@@ -83,9 +83,19 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 		finalY = yOffset + y
 	end
 	function self.event(e)
+		print(e[1])
 		if e[1] == "mouse_click" then
+			print(true)
 			if finalX <= e[3] and e[3] <= finalX+width-1 and finalY <= e[4] and e[4] <= finalY+height-1 then
-				return true
+				print(true)
+				if e[2] == 1 then
+					onLeftClick(self,unpack(e))
+					print(false)
+				elseif e[2] == 2 then
+					onRightClick(self,unpack(e))
+					print(true)
+				end
+				sleep(1)
 			end
 		end
 	end

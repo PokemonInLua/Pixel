@@ -18,8 +18,9 @@ function Layout(x,y,width,height,color,transparent,isActive)
 	local finalX = xOffset + x
 	local finalY = yOffset + y
 	local children = {}
-	local isActive = isActive or true
+	local isActive = isActive == false and false or true
 	local parent = {}
+	local bindings = {}
 
 	--Public
 	local self = {}
@@ -73,12 +74,16 @@ function Layout(x,y,width,height,color,transparent,isActive)
 	end
 	self.type = "Layout"
 	function self.event(...)
-		if not isActive then return end
-		for i,v in pairs(children) do
-			for k,m in pairs(v) do
-				m.event(...)
+		if isActive then
+			print("wow")
+			for i,v in pairs(children) do
+				for k,m in pairs(v) do
+					print(k)
+					m.event(...)
+				end
 			end
 		end
+		sleep(1)
 	end
 	function self.setParent(par)
 		parent = par
@@ -93,6 +98,9 @@ function Layout(x,y,width,height,color,transparent,isActive)
 		end
 		children[typ][#children[typ]+1] = kid
 		children[typ][#children[typ]].setParent(self)
+	end
+	function self.setBindings(b)
+		bindings = b
 	end
 	return self
 end
