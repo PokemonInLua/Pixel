@@ -95,6 +95,9 @@ function Layout(x,y,width,height,color,transparent,isActive)
 		end
 		children[typ][#children[typ]+1] = kid
 		children[typ][#children[typ]].setParent(self)
+		if children[typ][#children[typ]].setBindings then
+			children[typ][#children[typ]].setBindings(bindings)
+		end
 	end
 	function self.setBindings(b)
 		bindings = b
