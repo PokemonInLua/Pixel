@@ -25,7 +25,7 @@ function Layout(x,y,width,height,color,transparent,isActive)
 	--Public
 	local self = {}
 	function self.draw(isPressed)
-		if isActive then
+		if isActive  and (finalX <= 51 or finalX+width-1 >= 1) and (finalY <= 51 or finalY+height-1 >= 1) then
 			if not transparent then
 				paintutils.drawFilledBox(finalX,finalY,finalX+width-1,finalY+height-1,color)
 			end
@@ -75,15 +75,12 @@ function Layout(x,y,width,height,color,transparent,isActive)
 	self.type = "Layout"
 	function self.event(...)
 		if isActive then
-			print("wow")
 			for i,v in pairs(children) do
 				for k,m in pairs(v) do
-					print(k)
-					m.event(...)
+					m.event({...})
 				end
 			end
 		end
-		sleep(1)
 	end
 	function self.setParent(par)
 		parent = par
