@@ -5,7 +5,7 @@
 	Description: The button module
 ]]--
 
-function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,textColorOnPress,backgroundColorOnPress,onRightClick,onLeftClick)
+function Button(x,y,width,height,xText,yText,text,textColor,bgColor,textColorOnPress,bgColorOnPress,onRightClick,onLeftClick)
 	--Private--
 	local x = x or 1
 	local y = y or 1
@@ -15,9 +15,9 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 	local yText = yText or 2
 	local text = text or "I, button"
 	local textColor = textColor or colors.black
-	local backgroundColor = backgroundColor or colors.white
+	local bgColor = bgColor or colors.white
 	local textColorOnPress = textColorOnPress or colors.white
-	local backgroundColorOnPress = backgroundColorOnPress or colors.black
+	local bgColorOnPress = bgColorOnPress or colors.black
 	local onRightClick = onRightClick or function()end
 	local onLeftClick = onLeftClick or function()end
 	local xOffset = 0
@@ -30,7 +30,7 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 	local self = {}
 	function self.draw(isPressed)
 		if (finalX <= 51 or finalX+width-1 >= 1) and (finalY <= 51 or finalY+height-1 >= 1) then
-			paintutils.drawFilledBox(finalX,finalY,finalX+width-1,finalY+height-1,isPressed and backgroundColorOnPress or backgroundColor)
+			paintutils.drawFilledBox(finalX,finalY,finalX+width-1,finalY+height-1,isPressed and bgColorOnPress or bgColor)
 			term.setCursorPos(finalX+xText-1,finalY+yText-1)
 			term.setTextColor(isPressed and textColorOnPress or textColor)
 			term.write(text)
@@ -56,9 +56,9 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 			yText = yText,
 			text = text,
 			textColor = textColor,
-			backgroundColor = backgroundColor,
+			bgColor = bgColor,
 			textColorOnPress = textColorOnPress,
-			backgroundColorOnPress = backgroundColorOnPress,
+			bgColorOnPress = bgColorOnPress,
 		}
 	end
 	function self.set(targs)
@@ -70,9 +70,9 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 		yText = targs.yText or yText
 		text = targs.text or text
 		textColor = targs.textColor or textColor
-		backgroundColor = targs.backgroundColor or backgroundColor
+		bgColor = targs.bgColor or bgColor
 		textColorOnPress = targs.textColorOnPress or textColorOnPress
-		backgroundColorOnPress = targs.backgroundColorOnPress or backgroundColorOnPress
+		bgColorOnPress = targs.bgColorOnPress or bgColorOnPress
 		onRightClick = targs.onRightClick or onRightClick
 		onLeftClick = targs.onLeftClick or onLeftClick
 		finalX = xOffset + x

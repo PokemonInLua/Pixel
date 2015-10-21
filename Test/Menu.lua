@@ -5,12 +5,18 @@ menu.set({
 	y=1,
 	text="Menu",
 	textColor = colors.white,
-	backgroundColor = colors.cyan,
+	bgColor = colors.cyan,
+	itemBg = colors.lightGray,
+	itemTxt = colors.cyan,
 	items = {
 		{
 			type = "clickable",
 			text = "Open",
 			shText = "O",
+		},
+		{
+			type = "separator",
+			char = "-"
 		},
 		{
 			type = "clickable",

@@ -19,7 +19,6 @@
 	{
 		type = "separator"
 		char = aChar
-		mode = "full" or "centre" -- default is full
 	}
 ]]--
 
@@ -29,7 +28,7 @@ function Menu()
 	local y = 1
 	local text = ""
 	local width = 3
-	local backgroundColor = 1
+	local bgColor = 1
 	local textColor = 1
 	local xOffset = 0
 	local yOffset = 0
@@ -38,12 +37,14 @@ function Menu()
 	local bindings = {}
 	local items = {}
 	local onRightClick
+	local itemBg = 1
+	local itemTxt = 1
 	local doRun = true
 	--Public
 	local self = {}
 	function self.draw()
 		term.setCursorPos(finalX,finalY)
-		term.setBackgroundColor(backgroundColor)
+		term.setBackgroundColor(bgColor)
 		term.setTextColor(textColor)
 		term.write(" "..text.." ")
 	end
@@ -59,9 +60,11 @@ function Menu()
 			y = y,
 			text = text,
 			textColor = textColor,
-			backgroundColor = backgroundColor,
+			bgColor = bgColor,
 			items = items,
-			onRightClick = onRightClick
+			onRightClick = onRightClick,
+			itemBg = itemBg,
+			itemTxt = itemTxt,
 		}
 	end
 	function self.set(targs)
@@ -69,11 +72,13 @@ function Menu()
 		y = targs.y or y
 		text = targs.text or text
 		textColor = targs.textColor or textColor
-		backgroundColor = targs.backgroundColor or backgroundColor
+		bgColor = targs.bgColor or bgColor
 		items = targs.items or items
 		onRightClick = targs.onRightClick or onRightClick
 		finalX = xOffset + x
 		finalY = yOffset + y
+		itemBg = targs.itemBg or itemBg
+		itemTxt = targs.itemTxt or itemTxt
 		width = #text+2
 	end
 	function self.setOffset(xOffsetT,yOffsetT)
@@ -117,14 +122,14 @@ function Menu()
 		end
 		localx = finalX+size-1 <= tx and finalX or tx - (bu+2)
 		while true do
-			term.setBackgroundColor(textColor)
-			term.setTextColor(backgroundColor)
+			term.setBackgroundColor(itemBg)
+			term.setTextColor(itemTxt)
 			for i,v in pairs(items) do
 				term.setCursorPos(localx,finalY+i)
 				if v.type == "clickable" then
 					term.write(" "..v.text..string.rep(" ",size-#v.text-#v.shText)..v.shText.." ")
-				else
-
+				elseif v.type == "separator" then
+					term.write(" "..string.rep(v.char,size).." ")
 				end
 			end
 			os.pullEvent()

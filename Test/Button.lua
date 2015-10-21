@@ -9,14 +9,14 @@ input = {
 	yText = 2,
 	text = "I am a button!",
 	textColor = colors.white,
-	backgroundColor = colors.cyan,
+	bgColor = colors.cyan,
 	textColorOnPress = colors.white,
-	backgroundColorOnPress = colors.cyan,
+	bgColorOnPress = colors.cyan,
 	onLeftClick = function(self) term.clear() self.move(math.random(1,40),math.random(1,10)) end,
 	onRightClick = function(self) term.clear() self.resize(math.random(4,10),math.random(3,10)) end,
 }
 button.set(input)
-term.setBackgroundColor(colors.white)
+term.setbgColor(colors.white)
 term.clear()
 button.draw()
 term.setCursorPos(60,60)

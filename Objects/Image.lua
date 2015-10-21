@@ -31,7 +31,7 @@ function Image(x,y,path)
 			y = y,
 			text = text,
 			textColor = textColor,
-			backgroundColor = backgroundColor,
+			bgColor = bgColor,
 		}
 	end
 	function self.set(targs)
@@ -39,7 +39,7 @@ function Image(x,y,path)
 		y = targs.y or y
 		text = targs.text or text
 		textColor = targs.textColor or textColor
-		backgroundColor = targs.backgroundColor or backgroundColor
+		bgColor = targs.bgColor or bgColor
 		finalX = xOffset + x
 		finalY = yOffset + y
 	end
