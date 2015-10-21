@@ -122,7 +122,7 @@ function Menu()
 			end
 		end
 		localx = finalX+size-1 <= tx and finalX or tx - (bu+2)
-		while true do
+		while doRun do
 			term.setBackgroundColor(itemBg)
 			term.setTextColor(itemTxt)
 			for i,v in pairs(items) do
@@ -133,6 +133,8 @@ function Menu()
 					term.write(" "..string.rep(v.char,size).." ")
 				end
 			end
+			term.setCursorPos(localx,finalY+#items+1)
+			term.write(string.rep(" ",size+2))
 			e = {os.pullEvent()}
 			if bindings[e[1]] then
 				for i,v in pairs(bindings[e[1]])
@@ -140,11 +142,16 @@ function Menu()
 				end
 			end
 			if e[1] == "mouse_click" then
-				if localx <= e[3] and e[3] <= localx+size-1 and finalY <= e[4] and e[4] <= finalY+#items-1 then
+				if localx <= e[3] and e[3] <= localx+size-1 and finalY <= e[4] and e[4] <= finalY+#items then
 
+				else
+					doRun = false
 				end
 			end
 		end
+	end
+	function self.quit()
+		doRun = false
 	end
 	return self
 end
