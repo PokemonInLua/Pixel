@@ -6,10 +6,23 @@ menu.set({
 	text="Menu",
 	textColor = colors.white,
 	backgroundColor = colors.cyan,
+	items = {
+		{
+			type = "clickable",
+			text = "Open",
+			shText = "O",
+		},
+		{
+			type = "clickable",
+			text = "Lolssss",
+			shText = "O",
+		},
+	}
 })
 
-term.setBackgroundColor(colors.white)
-term.clear()
-menu.draw()
-term.setCursorPos(60,60)
-read()
+while true do
+	term.setBackgroundColor(colors.white)
+	term.clear()
+	menu.draw()
+	menu.event({os.pullEvent()})
+end
