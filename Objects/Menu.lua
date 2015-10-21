@@ -107,6 +107,7 @@ function Menu()
 		return 2+#text
 	end
 	function self.run()
+		local e = {}
 		doRun = true
 		local  size = 3
 		local localx = 0
@@ -132,7 +133,17 @@ function Menu()
 					term.write(" "..string.rep(v.char,size).." ")
 				end
 			end
-			os.pullEvent()
+			e = {os.pullEvent()}
+			if bindings[e[1]] then
+				for i,v in pairs(bindings[e[1]])
+					v()
+				end
+			end
+			if e[1] == "mouse_click" then
+				if localx <= e[3] and e[3] <= localx+size-1 and finalY <= e[4] and e[4] <= finalY+#items-1 then
+
+				end
+			end
 		end
 	end
 	return self

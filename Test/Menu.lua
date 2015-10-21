@@ -7,12 +7,13 @@ menu.set({
 	textColor = colors.white,
 	bgColor = colors.cyan,
 	itemBg = colors.lightGray,
-	itemTxt = colors.cyan,
+	itemTxt = colors.white,
 	items = {
 		{
 			type = "clickable",
 			text = "Open",
 			shText = "O",
+			onLeftClick = function(self) self.quit() end,
 		},
 		{
 			type = "separator",

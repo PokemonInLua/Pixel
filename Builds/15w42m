@@ -401,7 +401,7 @@ function Menu()
 	local self = {}
 	function self.draw()
 		term.setCursorPos(finalX,finalY)
-		term.setbgColor(bgColor)
+		term.setBackgroundColor(bgColor)
 		term.setTextColor(textColor)
 		term.write(" "..text.." ")
 	end
