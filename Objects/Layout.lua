@@ -73,11 +73,11 @@ function Layout(x,y,width,height,color,transparent,isActive)
 		finalY = yOffset + y
 	end
 	self.type = "Layout"
-	function self.event(...)
+	function self.event(e)
 		if isActive then
 			for i,v in pairs(children) do
 				for k,m in pairs(v) do
-					m.event({...})
+					m.event(e)
 				end
 			end
 		end

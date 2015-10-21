@@ -89,10 +89,10 @@ function Button(x,y,width,height,xText,yText,text,textColor,backgroundColor,text
 			if finalX <= e[3] and e[3] <= finalX+width-1 and finalY <= e[4] and e[4] <= finalY+height-1 then
 				if e[2] == 1 then
 					self.draw(true)
-					onLeftClick(self,unpack(e))
+					onLeftClick(self,e)
 				elseif e[2] == 2 then
 					self.draw(true)
-					onRightClick(self,unpack(e))
+					onRightClick(self,e)
 				end
 			end
 		end

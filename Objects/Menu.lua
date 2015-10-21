@@ -19,6 +19,8 @@ function Menu()
 	local finalY = yOffset + y
 	local bindings = {}
 	local items = {}
+	local onRightClick
+	local doRun = true
 	--Public
 	local self = {}
 	function self.draw()
@@ -41,6 +43,7 @@ function Menu()
 			textColor = textColor,
 			backgroundColor = backgroundColor,
 			items = items,
+			onRightClick = onRightClick
 		}
 	end
 	function self.set(targs)
@@ -49,6 +52,8 @@ function Menu()
 		text = targs.text or text
 		textColor = targs.textColor or textColor
 		backgroundColor = targs.backgroundColor or backgroundColor
+		items = targs.items or items
+		onRightClick = targs.onRightClick or onRightClick
 		finalX = xOffset + x
 		finalY = yOffset + y
 	end
@@ -59,14 +64,29 @@ function Menu()
 		finalY = yOffset + y
 	end
 	self.type = "Menu"
-	function self.event(...)
-
+	self.canRun = true
+	function self.event(e)
+		if e[1] == "mouse_click" then
+			if e[4] == y and x <= e[3] and e[3] <= x then
+				if e[1] == 1 then
+					self.run()
+				elseif e[1] == 2 then
+					onRightClick(self,e)
+				end
+			end
+		end
 	end
 	function self.setBindings(b)
 		bindings = b
 	end
 	function self.getWidth()
 		return 2+#text
+	end
+	function self.run()
+		doRun = true
+		while true do
+
+		end
 	end
 	return self
 end
