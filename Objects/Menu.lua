@@ -18,6 +18,7 @@ function Menu()
 	local finalX = xOffset + x
 	local finalY = yOffset + y
 	local bindings = {}
+	local items = {}
 	--Public
 	local self = {}
 	function self.draw()
@@ -39,6 +40,7 @@ function Menu()
 			text = text,
 			textColor = textColor,
 			backgroundColor = backgroundColor,
+			items = items,
 		}
 	end
 	function self.set(targs)
