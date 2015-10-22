@@ -628,8 +628,11 @@ function Menu()
 				end
 			end
 			if e[1] == "mouse_click" then
-				if localx <= e[3] and e[3] <= localx+size-1 and finalY+1 <= e[4] and e[4] <= finalY+#items+1 then
-					if localx+1 <= e[3] and e[3] <= localx+size-2 then
+				print(1)
+				if localx <= e[3] and e[3] <= localx+size+3 and finalY+1 <= e[4] and e[4] <= finalY+#items+3 then
+					print("yay")
+					if localx+1 <= e[3] and e[3] <= localx+size-2  and e[4] <= finalY+#items+1 then
+						print("wowo")
 						local obj = items[e[4]-finalY]
 						if obj.type = "clickable" then
 							if e[2]==1 then
@@ -639,9 +642,11 @@ function Menu()
 							end
 						end
 					end
+					sleep(1)
 				else
 					doRun = false
 				end
+				sleep(1)
 			elseif e[1] == "key" then
 				
 			end

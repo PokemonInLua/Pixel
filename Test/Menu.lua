@@ -8,13 +8,14 @@ file.set({
 	bgColor = colors.cyan,
 	itemBg = colors.lightGray,
 	itemTxt = colors.white,
+	onRightClick = function() end,
 	items = {
 		{
 			type = "clickable",
 			text = "Open",
 			shText = "O",
-			onLeftClick = function(self) end,
-			onRightClick = function(self) end,
+			onLeftClick = function(self) print("Open Left") sleep(1) end,
+			onRightClick = function(self) print("Open Right") end,
 		},
 		{
 			type = "separator",
@@ -38,6 +39,7 @@ edit.set({
 	bgColor = colors.cyan,
 	itemBg = colors.lightGray,
 	itemTxt = colors.white,
+	onRightClick = function() end,
 	items = {
 		{
 			type = "clickable",
