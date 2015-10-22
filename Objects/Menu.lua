@@ -41,6 +41,7 @@ function Menu()
 	local itemTxt = 1
 	local doRun = true
 	local parent = {}
+	
 	--Public
 	local self = {}
 	function self.draw()
@@ -164,6 +165,11 @@ function Menu()
 							obj.onLeftClick(self)
 						end
 					end
+				end
+			end
+			if bindings[e[1]] then
+				for i,v in pairs(bindings[e[1]]) do
+					v()
 				end
 			end
 		end
