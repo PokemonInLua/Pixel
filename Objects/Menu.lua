@@ -40,6 +40,7 @@ function Menu()
 	local itemBg = 1
 	local itemTxt = 1
 	local doRun = true
+	local parent = {}
 	--Public
 	local self = {}
 	function self.draw()
@@ -91,7 +92,7 @@ function Menu()
 	self.canRun = true
 	function self.event(e)
 		if e[1] == "mouse_click" then
-			if e[4] == finalY and finalX <= e[3] and e[3] <= finalX+width-1 then
+			if e[4] == finalY and finalX+1 <= e[3] and e[3] <= finalX+width-2 then
 				if e[2] == 1 then
 					self.run()
 				elseif e[2] == 2 then
@@ -137,18 +138,35 @@ function Menu()
 			term.write(string.rep(" ",size+2))
 			e = {os.pullEvent()}
 			if bindings[e[1]] then
-				for i,v in pairs(bindings[e[1]])
+				for i,v in pairs(bindings[e[1]]) do
 					v()
 				end
 			end
 			if e[1] == "mouse_click" then
-				if localx <= e[3] and e[3] <= localx+size-1 and finalY <= e[4] and e[4] <= finalY+#items then
-
+				if localx <= e[3] and e[3] <= localx+size-1 and finalY+1 <= e[4] and e[4] <= finalY+#items+1 then
+					if localx+1 <= e[3] and e[3] <= localx+size-2 then
+						local obj = items[e[4]-finalY]
+						if obj.type = "clickable" then
+							if e[2]==1 then
+								obj.onLeftClick(self)
+							elseif e[2] == 2 then
+								obj.onRightClick(self)
+							end
+						end
+					end
 				else
 					doRun = false
 				end
+			elseif e[1] == "key" then
+				
 			end
 		end
+	end
+	function self.setParent(par)
+		parent = par
+	end
+	function self.callParent(method,...)
+		parent[method](...)
 	end
 	function self.quit()
 		doRun = false

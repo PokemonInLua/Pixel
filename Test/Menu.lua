@@ -1,9 +1,9 @@
 os.loadAPI("Pixel/Pixel")
-menu = Pixel.Menu()
-menu.set({
+file = Pixel.Menu()
+file.set({
 	x=1,
 	y=1,
-	text="Menu",
+	text="File",
 	textColor = colors.white,
 	bgColor = colors.cyan,
 	itemBg = colors.lightGray,
@@ -13,7 +13,8 @@ menu.set({
 			type = "clickable",
 			text = "Open",
 			shText = "O",
-			onLeftClick = function(self) self.quit() end,
+			onLeftClick = function(self) end,
+			onRightClick = function(self) end,
 		},
 		{
 			type = "separator",
@@ -21,15 +22,51 @@ menu.set({
 		},
 		{
 			type = "clickable",
-			text = "Lolssss",
+			text = "Close",
+			shText = "C",
+			onLeftClick = function(self) end,
+			onRightClick = function(self) end,
+		},
+	}
+})
+edit = Pixel.Menu()
+edit.set({
+	x=file.getWidth()+1,
+	y=1,
+	text="Edit",
+	textColor = colors.white,
+	bgColor = colors.cyan,
+	itemBg = colors.lightGray,
+	itemTxt = colors.white,
+	items = {
+		{
+			type = "clickable",
+			text = "Quit",
+			shText = "Q",
+			onLeftClick = function(self) self.quit() end,
+			onRightClick = function(self) end,
+		},
+		{
+			type = "separator",
+			char = "-"
+		},
+		{
+			type = "clickable",
+			text = "Jokul",
 			shText = "O",
+			onLeftClick = function(self) end,
+			onRightClick = function(self) end,
 		},
 	}
 })
 
+
 while true do
 	term.setBackgroundColor(colors.white)
 	term.clear()
-	menu.draw()
-	menu.event({os.pullEvent()})
+	file.draw()
+	edit.draw()
+	e = {os.pullEvent()}
+	file.event(e)
+	edit.event(e)
 end
