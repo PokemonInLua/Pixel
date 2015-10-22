@@ -158,7 +158,13 @@ function Menu()
 					doRun = false
 				end
 			elseif e[1] == "key" then
-				
+				for i,obj in pairs(items) do
+					if obj.type == "clickable" then
+						if obj.shortcut == e[2] then
+							obj.onLeftClick(self)
+						end
+					end
+				end
 			end
 		end
 	end
