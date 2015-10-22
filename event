@@ -1,0 +1,6 @@
+while true do
+  p = {os.pullEvent()}
+  for i,v in pairs(p) do
+    print(v)
+  end
+end
