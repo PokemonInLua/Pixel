@@ -5,7 +5,7 @@
 	Description: An image drawer
 ]]--
 
-function Image(x,y,path)
+function Image()
 	--Private
 	local x = x or 1
 	local y = y or 1

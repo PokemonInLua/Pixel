@@ -5,7 +5,7 @@
 	Description: The button module
 ]]--
 
-function Button(x,y,width,height,xText,yText,text,textColor,bgColor,textColorOnPress,bgColorOnPress,onRightClick,onLeftClick)
+function Button()
 	--Private--
 	local x = x or 1
 	local y = y or 1

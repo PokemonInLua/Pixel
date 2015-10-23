@@ -5,7 +5,7 @@
 	Description: A container for other objects
 ]]--
 
-function Layout(x,y,width,height,color,transparent,isActive)
+function Layout()
 	--Private
 	local x = x or 1
 	local y = y or 1

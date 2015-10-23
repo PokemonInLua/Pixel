@@ -169,7 +169,7 @@ function Menu()
 			end
 			if bindings[e[1]] then
 				for i,v in pairs(bindings[e[1]]) do
-					v()
+					v(e)
 				end
 			end
 		end
