@@ -54,9 +54,7 @@ function Label(x,y,text,textColor,backgroundColor)
 		finalX = xOffset + x
 		finalY = yOffset + y
 	end
-	function self.getType()
-		return "Label"
-	end
+	self.type = "Label"
 	function self.event(...)
 
 	end
