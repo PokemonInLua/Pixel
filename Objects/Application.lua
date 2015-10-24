@@ -34,7 +34,7 @@ function Name()
 		while doRun do
 			layout.set({isActive = true})
 			layout.draw()
-			event = {os.pullEvent()}
+			event = {coroutine.yield()}
 			layout.event(event)
 			if bindings[event[1]] then
 				for i,v in pairs(bindings[event[1]]) do

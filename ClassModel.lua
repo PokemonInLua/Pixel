@@ -48,7 +48,7 @@ function Name(x,y)
 		finalX = xOffset + x
 		finalY = yOffset + y
 	end
-	self.type = "type"
+	self.type = ""
 	function self.event(...)
 
 	end
