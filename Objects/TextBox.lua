@@ -7,12 +7,20 @@
 
 function TextBox()
 	--Private
-	local x = x or 1
-	local y = y or 1
+	local x = 1
+	local y = 1
+	local width = 5
+	local height = 1
+	local initText = ""
+	local text = ""
+	local bindings = {}
+	local parent = {}
 	local xOffset = 0
 	local yOffset = 0
 	local finalX = xOffset + x
 	local finalY = yOffset + y
+	local wordWrap(text,width)
+
 	--Public
 	local self = {}
 	function self.draw(isPressed)
@@ -51,6 +59,12 @@ function TextBox()
 	self.type = ""
 	function self.event(...)
 
+	end
+	function self.run()
+
+	end
+	function self.setParent(par)
+		parent = par
 	end
 	return self
 end

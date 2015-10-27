@@ -9,6 +9,7 @@ function Name(x,y)
 	--Private
 	local x = x or 1
 	local y = y or 1
+	local parent = {}
 	local xOffset = 0
 	local yOffset = 0
 	local finalX = xOffset + x
@@ -51,6 +52,9 @@ function Name(x,y)
 	self.type = ""
 	function self.event(...)
 
+	end
+	function self.setParent(par)
+		parent = par
 	end
 	return self
 end
