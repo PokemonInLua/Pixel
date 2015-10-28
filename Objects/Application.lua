@@ -21,6 +21,10 @@ function Name()
 	function self.set(targs)
 		layout = targs.layout or layout
 		bindings = targs.bindings or bindings
+		if targs.layout then
+			layout.setApplication(self)
+			layout.setParent(self)
+		end
 	end
 	function self.addBinging(event,func)
 		if not bindings[event] then

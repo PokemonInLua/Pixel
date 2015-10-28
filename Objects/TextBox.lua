@@ -9,22 +9,46 @@ function TextBox()
 	--Private
 	local x = 1
 	local y = 1
+	local bgColor = 1
+	local textColor = 2
+	local helpTextColor = 4
 	local width = 5
 	local height = 1
-	local initText = ""
+	local helpText = ""
 	local text = ""
 	local bindings = {}
 	local parent = {}
+	local application = {}
 	local xOffset = 0
 	local yOffset = 0
 	local finalX = xOffset + x
 	local finalY = yOffset + y
-	local wordWrap(text,width)
+	local function wordWrap()
+		local lines = {}
+		local pos = 1
+		while true do 
+			local char = text:sub(pos,pos)
+			if char == "\n" then
+
+			elseif
+
+			end
+		end
+	end
 
 	--Public
 	local self = {}
 	function self.draw(isPressed)
-
+		if (finalX <= 51 or finalX+width-1 >= 1) and (finalY <= 51 or finalY+height-1 >= 1) then
+			paintutils.drawFilledBox(finalX,finalY,finalX+width-1,finalY+height-1,bgColor)
+			if text == "" then 
+				term.setCursorPos(finalX,finalY)
+				term.setTextColor(helpTextColor)
+				term.write(helpText)
+			else
+				
+			end
+		end
 	end
 	function self.move(xNew,yNew)
 		x = xNew
@@ -65,6 +89,9 @@ function TextBox()
 	end
 	function self.setParent(par)
 		parent = par
+	end
+	function self.setApplication(app)
+		application = app
 	end
 	return self
 end

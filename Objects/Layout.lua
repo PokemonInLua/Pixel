@@ -21,7 +21,7 @@ function Layout()
 	local isActive = isActive == false and false or true
 	local parent = {}
 	local bindings = {}
-
+	local application = {}
 	--Public
 	local self = {}
 	function self.draw(isPressed)
@@ -84,6 +84,9 @@ function Layout()
 	end
 	function self.setParent(par)
 		parent = par
+	end
+	function self.setApplication(app)
+		application = app
 	end
 	function self.callParent(method,...)
 		parent[method](...)

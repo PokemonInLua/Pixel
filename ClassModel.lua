@@ -10,6 +10,7 @@ function Name(x,y)
 	local x = x or 1
 	local y = y or 1
 	local parent = {}
+	local application = {}
 	local xOffset = 0
 	local yOffset = 0
 	local finalX = xOffset + x
@@ -55,6 +56,9 @@ function Name(x,y)
 	end
 	function self.setParent(par)
 		parent = par
+	end
+	function self.setApplication(app)
+		application = app
 	end
 	return self
 end
