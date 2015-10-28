@@ -91,6 +91,9 @@ function Layout()
 	function self.callParent(method,...)
 		parent[method](...)
 	end
+	function self.callApplication(method,...)
+		(application or parent)[method](...)
+	end
 	function self.addChild(kid)
 		local typ = kid.type
 		if not children[typ] then
@@ -98,6 +101,7 @@ function Layout()
 		end
 		children[typ][#children[typ]+1] = kid
 		children[typ][#children[typ]].setParent(self)
+		children[typ][#children[typ]].setApplication(parent)
 		if children[typ][#children[typ]].setBindings then
 			children[typ][#children[typ]].setBindings(bindings)
 		end

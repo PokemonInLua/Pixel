@@ -14,10 +14,10 @@ function Button()
 	local xText = xText or 2
 	local yText = yText or 2
 	local text = text or "I, button"
-	local textColor = textColor or colors.black
-	local bgColor = bgColor or colors.white
-	local textColorOnPress = textColorOnPress or colors.white
-	local bgColorOnPress = bgColorOnPress or colors.black
+	local fg = fg or colors.black
+	local bg = bg or colors.white
+	local fgOnPress = fgOnPress or colors.white
+	local bgOnPress = bgOnPress or colors.black
 	local onRightClick = onRightClick or function()end
 	local onLeftClick = onLeftClick or function()end
 	local xOffset = 0
@@ -30,9 +30,9 @@ function Button()
 	local self = {}
 	function self.draw(isPressed)
 		if (finalX <= 51 or finalX+width-1 >= 1) and (finalY <= 51 or finalY+height-1 >= 1) then
-			paintutils.drawFilledBox(finalX,finalY,finalX+width-1,finalY+height-1,isPressed and bgColorOnPress or bgColor)
+			paintutils.drawFilledBox(finalX,finalY,finalX+width-1,finalY+height-1,isPressed and bgOnPress or bg)
 			term.setCursorPos(finalX+xText-1,finalY+yText-1)
-			term.setTextColor(isPressed and textColorOnPress or textColor)
+			term.setTextColor(isPressed and fgOnPress or fg)
 			term.write(text)
 		end
 	end
@@ -55,10 +55,10 @@ function Button()
 			xText = xText,
 			yText = yText,
 			text = text,
-			textColor = textColor,
-			bgColor = bgColor,
-			textColorOnPress = textColorOnPress,
-			bgColorOnPress = bgColorOnPress,
+			fg = fg,
+			bg = bg,
+			fgOnPress = fgOnPress,
+			bgOnPress = bgOnPress,
 		}
 	end
 	function self.set(targs)
@@ -69,10 +69,10 @@ function Button()
 		xText = targs.xText or xText
 		yText = targs.yText or yText
 		text = targs.text or text
-		textColor = targs.textColor or textColor
-		bgColor = targs.bgColor or bgColor
-		textColorOnPress = targs.textColorOnPress or textColorOnPress
-		bgColorOnPress = targs.bgColorOnPress or bgColorOnPress
+		fg = targs.fg or fg
+		bg = targs.bg or bg
+		fgOnPress = targs.fgOnPress or fgOnPress
+		bgOnPress = targs.bgOnPress or bgOnPress
 		onRightClick = targs.onRightClick or onRightClick
 		onLeftClick = targs.onLeftClick or onLeftClick
 		finalX = xOffset + x
