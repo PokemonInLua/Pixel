@@ -30,7 +30,7 @@ function TextBox()
 			local char = text:sub(pos,pos)
 			if char == "\n" then
 
-			elseif
+			elseif true then
 
 			end
 		end

@@ -32,7 +32,7 @@ function VerticalScrollBar()
 		size = height*height/totalHeight
 		pos = math.floor(percentage*(height-size))
 		term.setCursorPos(x,y)
-		term.setBackgroungColor(bgButton)
+		term.setBackgroundColor(bgButton)
 		term.setTextColor(fgButton)
 		term.write("^")
 		term.setCursorPos(x,y+height-1)
