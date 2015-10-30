@@ -30,7 +30,7 @@ function VerticalScrollBar()
 	local self = {}
 	function self.draw(isPressed)
 		size = height*height/totalHeight
-		pos = math.floor(percentage*(height-size))
+		pos = math.ceil(percentage*(height-size)/100)
 		term.setCursorPos(x,y)
 		term.setBackgroundColor(bgButton)
 		term.setTextColor(fgButton)
@@ -38,7 +38,7 @@ function VerticalScrollBar()
 		term.setCursorPos(x,y+height-1)
 		term.write("v")
 		paintutils.drawLine(x,y+1,x,y+height-2,bgColor)
-		paintutils.drawLine(x,pos,x,pos+size-1,fgColor)
+		paintutils.drawLine(x,pos+1,x,pos+size,fgColor)
 	end
 	function self.get()
 		return {
