@@ -5,7 +5,7 @@
 	Description: A scrollbar
 ]]--
 
-function Name()
+function VerticalScrollBar()
 	--Private
 	local x = x or 1
 	local y = y or 1
@@ -44,7 +44,6 @@ function Name()
 		return {
 			x = x,
 			y = y,
-			text = text,
 			parent = parent,
 			height = height,
 			totalHeight = totalHeight,
@@ -60,7 +59,6 @@ function Name()
 	function self.set(targs)
 		x = targs.x or x
 		y = targs.y or y
-		text = targs.text or text
 		parent = targs.parent or parent
 		height = targs.height or height
 		totalHeight = targs.totalHeight or totalHeight
