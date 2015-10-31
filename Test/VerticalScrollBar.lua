@@ -10,7 +10,7 @@ sc.set({
 	fgColor = colors.blue,
 	bgButton = colors.orange,
 	fgButton = colors.red,
-	percentage = 1,
+	percentage = 100,
 })
 
 sc.draw()
