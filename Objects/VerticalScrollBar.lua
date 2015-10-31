@@ -100,7 +100,7 @@ function VerticalScrollBar()
 						update(percentage)
 					else
 						if y+pos+1 <= event[4] and event[4] <= y+pos+size then
-							self.run(event[3],event[4])
+							self.run(event[4])
 						else
 							local e4 = event[4] - math.floor(size/2)
 							local per = e4/((height-(size+2))/100)
@@ -117,10 +117,39 @@ function VerticalScrollBar()
 			end
 		end
 	end
-	function self.run(x,y)
+	function self.run(y)
+		local prevY = y
 		while true do
-			local event = {coroutine.yield()}
-			break
+			local event = {os.pullEvent()}
+			if event[1] == "mouse_click" then
+				if event[3] == x and y <= event[4] and event[4] <= y+height-1 then
+					self.event(event)
+				else
+					if application.event then
+						application.event(event)
+						break
+					else
+						break
+					end
+				end
+			elseif event[1] == "mouse_drag" then
+				local diff = event[4] - prevY
+				prevY = event[4] 
+				local per = (pos+diff)/((height-(size+2))/100)
+				percentage = per - per%interval
+				if percentage > 100 then
+					percentage = 100
+				elseif percentage < 0 then
+					percentage = 0
+				end
+				self.draw()
+				update(percentage)
+			end
+			if bindings[event[1]] then
+				for i,v in pairs(bindings[event[1]]) do
+					v()
+				end
+			end
 		end
 	end
 	function self.setParent(par)
@@ -135,6 +164,9 @@ function VerticalScrollBar()
 		if application[method] then
 			application[method](...)
 		end
+	end
+	function self.setBindings(bin)
+		bindings = bin
 	end
 	return self
 end
