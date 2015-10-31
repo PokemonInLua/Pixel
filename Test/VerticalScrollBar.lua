@@ -11,8 +11,12 @@ sc.set({
 	bgButton = colors.orange,
 	fgButton = colors.red,
 	percentage = 100,
+	interval = 5,
 })
 
-sc.draw()
-
-read()
+while true do
+	sc.draw()
+	sc.event({os.pullEvent()})
+	term.setCursorPos(1,1)
+	print(sc.get().percentage," ")
+end

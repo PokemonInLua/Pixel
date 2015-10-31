@@ -26,11 +26,12 @@ function VerticalScrollBar()
 	local size = 1
 	local pos = 1
 	local bindings = {}
+	local interval = 1
 	--Public
 	local self = {}
 	function self.draw(isPressed)
 		size = math.floor(height*height/totalHeight)
-		pos = math.ceil(percentage*(height-(size+2)/100)
+		pos = math.ceil(percentage*(height-(size+2))/100)
 		term.setCursorPos(x,y)
 		term.setBackgroundColor(bgButton)
 		term.setTextColor(fgButton)
@@ -38,7 +39,7 @@ function VerticalScrollBar()
 		term.setCursorPos(x,y+height-1)
 		term.write("v")
 		paintutils.drawLine(x,y+1,x,y+height-2,bgColor)
-		paintutils.drawLine(x,y+pos,x,y+pos+size,fgColor)
+		paintutils.drawLine(x,y+pos+1,x,y+pos+size,fgColor)
 	end
 	function self.get()
 		return {
@@ -54,6 +55,7 @@ function VerticalScrollBar()
 			percentage = percentage,
 			update = update,
 			bindings = bindings,
+			interval = interval,
 		}
 	end
 	function self.set(targs)
@@ -71,6 +73,7 @@ function VerticalScrollBar()
 		bindings = targs.bindings or bindings
 		finalX = xOffset + x
 		finalY = yOffset + y
+		interval = targs.interval or interval
 	end
 	function self.setOffset(xOffsetT,yOffsetT)
 		xOffset = xOffsetT
@@ -79,14 +82,47 @@ function VerticalScrollBar()
 		finalY = yOffset + y
 	end
 	self.type = ""
-	function self.event(...)
+	function self.event(event)
+		if event[1] == "mouse_click" and event[2] == 1 then
+			if event[3] == x then
+				if y <= event[4] and event[4] <= y+height-1 then
+					if event[4] == y then
+						percentage = percentage - interval
+						if percentage < 0 then
+							percentage = 0
+						end
+						update(percentage)
+					elseif event[4] == y+height-1 then
+						percentage = percentage + interval
+						if percentage > 100 then
+							percentage = 100
+						end
+						update(percentage)
+					else
 
+					end
+				end
+			end
+		end
+	end
+	function self.run()
+		while true do
+			local event = {coroutine.yield()}
+
+		end
 	end
 	function self.setParent(par)
 		parent = par
 	end
+	function self.callPArent(method,...)
+		if parent[method] then
+			parent[method](...)
+		end
+	end
 	function self.callApplication(method,...)
-		(application or parent)[method](...)
+		if application[method] then
+			application[method](...)
+		end
 	end
 	return self
 end
