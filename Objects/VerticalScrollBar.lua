@@ -99,16 +99,28 @@ function VerticalScrollBar()
 						end
 						update(percentage)
 					else
-
+						if y+pos+1 <= event[4] and event[4] <= y+pos+size then
+							self.run(event[3],event[4])
+						else
+							local e4 = event[4] - math.floor(size/2)
+							local per = e4/((height-(size+2))/100)
+							percentage = per - per%interval
+							if percentage > 100 then
+								percentage = 100
+							elseif percentage < 0 then
+								percentage = 0
+							end
+							update(percentage)
+						end
 					end
 				end
 			end
 		end
 	end
-	function self.run()
+	function self.run(x,y)
 		while true do
 			local event = {coroutine.yield()}
-
+			break
 		end
 	end
 	function self.setParent(par)
