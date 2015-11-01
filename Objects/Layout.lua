@@ -109,5 +109,14 @@ function Layout()
 	function self.setBindings(b)
 		bindings = b
 	end
+	function self.verticalScroll(percentage)
+		local offset = percentage*(height-({term.size()})[2])
+		finalY = offset + y
+		for i,v in pairs(children) do
+			for k,m in pairs(v) do
+				m.setOffset(finalX-1,finalY-1)
+			end
+		end
+	end
 	return self
 end
