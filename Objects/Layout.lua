@@ -52,6 +52,7 @@ function Layout(parameters)
 			color = color,
 			transparent = transparent,
 			isActive = isActive,
+			children = children,
 		}
 	end
 	function self.set(targs)

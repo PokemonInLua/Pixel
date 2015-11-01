@@ -1,0 +1,11 @@
+<application name="Test">
+	layout {
+		name: "Name"
+	}
+	bindings {
+		timer: {
+			1: function(event) print(event[1]) end,
+			2: function(event) print(event[2]) end,
+		}
+	}
+</application>
