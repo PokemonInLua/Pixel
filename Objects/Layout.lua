@@ -24,7 +24,7 @@ function Layout(parameters)
 	local application = {}
 	--Public
 	local self = {}
-	function self.draw(isPressed)
+	function self.draw()
 		if isActive  and (finalX <= 51 or finalX+width-1 >= 1) and (finalY <= 51 or finalY+height-1 >= 1) then
 			if not transparent then
 				paintutils.drawFilledBox(finalX,finalY,finalX+width-1,finalY+height-1,color)
@@ -110,13 +110,14 @@ function Layout(parameters)
 		bindings = b
 	end
 	function self.verticalScroll(percentage)
-		local offset = percentage*(height-({term.size()})[2])
+		local offset = percentage*(height-({term.getSize()})[2])
 		finalY = offset + y
 		for i,v in pairs(children) do
 			for k,m in pairs(v) do
 				m.setOffset(finalX-1,finalY-1)
 			end
 		end
+		self.draw()
 	end
 	--Constructor
 	self.set(parameters)

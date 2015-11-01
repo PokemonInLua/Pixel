@@ -5,8 +5,13 @@
 	Description: A scrollbar
 ]]--
 
-function VerticalScrollBar()
+function VerticalScrollBar(parameters)
 	--Private
+	local function log(d)
+		file = fs.open("percentage","a")
+		file.write(tostring(d).." \n")
+		file.close()
+	end
 	local x = x or 1
 	local y = y or 1
 	local parent = {}
@@ -14,7 +19,7 @@ function VerticalScrollBar()
 	local yOffset = 0
 	local finalX = xOffset + x
 	local finalY = yOffset + y
-	local height = {}
+	local height = 3
 	local application = {}
 	local totalHeight = 0
 	local bgColor = 1
@@ -91,12 +96,14 @@ function VerticalScrollBar()
 						if percentage < 0 then
 							percentage = 0
 						end
+						log(percentage)
 						update(percentage)
 					elseif event[4] == y+height-1 then
 						percentage = percentage + interval
 						if percentage > 100 then
 							percentage = 100
 						end
+						log(percentage)
 						update(percentage)
 					else
 						if y+pos+1 <= event[4] and event[4] <= y+pos+size then
@@ -110,6 +117,7 @@ function VerticalScrollBar()
 							elseif percentage < 0 then
 								percentage = 0
 							end
+							log(percentage)
 							update(percentage)
 						end
 					end
@@ -143,6 +151,7 @@ function VerticalScrollBar()
 					percentage = 0
 				end
 				self.draw()
+				log(percentage)
 				update(percentage)
 			end
 			if bindings[event[1]] then
@@ -172,5 +181,7 @@ function VerticalScrollBar()
 		application = app
 	end
 	self.type = "VerticalScrollBar"
+	--Constructor
+	self.set(parameters)
 	return self
 end

@@ -1,3 +1,12 @@
+local err = error
+error = function(msg,lvl)
+	term.setCursorPos(1,1)
+	err(msg,lvl)
+	file = fs.open("err","w")
+	file.write(msg)
+	file.close()
+end
+
 term.clear()
 os.loadAPI("Pixel/Pixel")
 lay = Pixel.Layout({
@@ -47,12 +56,12 @@ scrollBar = Pixel.VerticalScrollBar({
 	height = 19,
 	totalHeight = 40,
 	bgColor = colors.cyan,
-	fgColor = colors.white,
+	fgColor = colors.orange,
 	bgButton = colors.white,
 	fgButton = colors.cyan,
 	percentage = 0,
 	update = lay.verticalScroll,
-	interval = 100/40,
+	interval = 100/21,
 })
 
 while true do
