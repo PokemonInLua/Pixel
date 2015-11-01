@@ -96,15 +96,15 @@ function VerticalScrollBar(parameters)
 						if percentage < 0 then
 							percentage = 0
 						end
-						log(percentage)
-						update(percentage)
+						log(percentage/100)
+						update(percentage/100)
 					elseif event[4] == y+height-1 then
 						percentage = percentage + interval
 						if percentage > 100 then
 							percentage = 100
 						end
-						log(percentage)
-						update(percentage)
+						log(percentage/100)
+						update(percentage/100)
 					else
 						if y+pos+1 <= event[4] and event[4] <= y+pos+size then
 							self.run(event[4])
@@ -117,8 +117,8 @@ function VerticalScrollBar(parameters)
 							elseif percentage < 0 then
 								percentage = 0
 							end
-							log(percentage)
-							update(percentage)
+							log(percentage/100)
+							update(percentage/100)
 						end
 					end
 				end
@@ -136,6 +136,9 @@ function VerticalScrollBar(parameters)
 					if application.event then
 						application.event(event)
 						break
+					elseif parent.event then
+						parent.event(event)
+						break
 					else
 						break
 					end
@@ -151,8 +154,8 @@ function VerticalScrollBar(parameters)
 					percentage = 0
 				end
 				self.draw()
-				log(percentage)
-				update(percentage)
+				log(percentage/100)
+				update(percentage/100)
 			end
 			if bindings[event[1]] then
 				for i,v in pairs(bindings[event[1]]) do

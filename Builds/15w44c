@@ -553,7 +553,10 @@ function Layout(parameters)
 		bindings = b
 	end
 	function self.verticalScroll(percentage)
-		local offset = percentage*(height-({term.getSize()})[2])
+		local offset = percentage*(height-({term.getSize()})[2])*(-1)
+		file = fs.open("offset","a")
+		file.write(tostring(offset).." \n")
+		file.close()
 		finalY = offset + y
 		for i,v in pairs(children) do
 			for k,m in pairs(v) do
@@ -955,15 +958,15 @@ function VerticalScrollBar(parameters)
 						if percentage < 0 then
 							percentage = 0
 						end
-						log(percentage)
-						update(percentage)
+						log(percentage/100)
+						update(percentage/100)
 					elseif event[4] == y+height-1 then
 						percentage = percentage + interval
 						if percentage > 100 then
 							percentage = 100
 						end
-						log(percentage)
-						update(percentage)
+						log(percentage/100)
+						update(percentage/100)
 					else
 						if y+pos+1 <= event[4] and event[4] <= y+pos+size then
 							self.run(event[4])
@@ -976,8 +979,8 @@ function VerticalScrollBar(parameters)
 							elseif percentage < 0 then
 								percentage = 0
 							end
-							log(percentage)
-							update(percentage)
+							log(percentage/100)
+							update(percentage/100)
 						end
 					end
 				end
@@ -995,6 +998,9 @@ function VerticalScrollBar(parameters)
 					if application.event then
 						application.event(event)
 						break
+					elseif parent.event then
+						parent.event(event)
+						break
 					else
 						break
 					end
@@ -1010,8 +1016,8 @@ function VerticalScrollBar(parameters)
 					percentage = 0
 				end
 				self.draw()
-				log(percentage)
-				update(percentage)
+				log(percentage/100)
+				update(percentage/100)
 			end
 			if bindings[event[1]] then
 				for i,v in pairs(bindings[event[1]]) do
