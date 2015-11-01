@@ -111,9 +111,6 @@ function Layout(parameters)
 	end
 	function self.verticalScroll(percentage)
 		local offset = percentage*(height-({term.getSize()})[2])*(-1)
-		file = fs.open("offset","a")
-		file.write(tostring(offset).." \n")
-		file.close()
 		finalY = offset + y
 		for i,v in pairs(children) do
 			for k,m in pairs(v) do

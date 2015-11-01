@@ -7,11 +7,6 @@
 
 function VerticalScrollBar(parameters)
 	--Private
-	local function log(d)
-		file = fs.open("percentage","a")
-		file.write(tostring(d).." \n")
-		file.close()
-	end
 	local x = x or 1
 	local y = y or 1
 	local parent = {}
@@ -96,14 +91,12 @@ function VerticalScrollBar(parameters)
 						if percentage < 0 then
 							percentage = 0
 						end
-						log(percentage/100)
 						update(percentage/100)
 					elseif event[4] == y+height-1 then
 						percentage = percentage + interval
 						if percentage > 100 then
 							percentage = 100
 						end
-						log(percentage/100)
 						update(percentage/100)
 					else
 						if y+pos+1 <= event[4] and event[4] <= y+pos+size then
@@ -117,7 +110,6 @@ function VerticalScrollBar(parameters)
 							elseif percentage < 0 then
 								percentage = 0
 							end
-							log(percentage/100)
 							update(percentage/100)
 						end
 					end
@@ -154,7 +146,6 @@ function VerticalScrollBar(parameters)
 					percentage = 0
 				end
 				self.draw()
-				log(percentage/100)
 				update(percentage/100)
 			end
 			if bindings[event[1]] then
