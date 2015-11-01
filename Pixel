@@ -69,7 +69,7 @@ end
 	Description: The button module
 ]]--
 
-function Button()
+function Button(parameters)
 	--Private--
 	local x = x or 1
 	local y = y or 1
@@ -89,6 +89,7 @@ function Button()
 	local finalX = xOffset + x
 	local finalY = yOffset + y
 	local parent = {}
+	local application = {}
 
 	--Public--
 	local self = {}
@@ -163,12 +164,27 @@ function Button()
 	end
 	self.type = "Button"
 	self.canRun = false
-	function self.callParent(method,...)
-		parent[method](...)
-	end
 	function self.setParent(par)
 		parent = par
 	end
+	function self.callParent(method,...)
+		if parent[method] then
+			parent[method](...)
+		end
+	end
+	function self.callApplication(method,...)
+		if application[method] then
+			application[method](...)
+		end
+	end
+	function self.setApplication(app)
+		application = app
+	end
+	function self.setBindings(bin)
+		bindings = bin
+	end
+	--Constructor
+	self.set(parameters)
 	return self
 end
 
@@ -432,7 +448,7 @@ end
 	Description: A container for other objects
 ]]--
 
-function Layout()
+function Layout(parameters)
 	--Private
 	local x = x or 1
 	local y = y or 1
@@ -536,6 +552,17 @@ function Layout()
 	function self.setBindings(b)
 		bindings = b
 	end
+	function self.verticalScroll(percentage)
+		local offset = percentage*(height-({term.size()})[2])
+		finalY = offset + y
+		for i,v in pairs(children) do
+			for k,m in pairs(v) do
+				m.setOffset(finalX-1,finalY-1)
+			end
+		end
+	end
+	--Constructor
+	self.set(parameters)
 	return self
 end
 
@@ -986,7 +1013,7 @@ function VerticalScrollBar()
 	function self.setParent(par)
 		parent = par
 	end
-	function self.callPArent(method,...)
+	function self.callParent(method,...)
 		if parent[method] then
 			parent[method](...)
 		end
@@ -999,5 +1026,9 @@ function VerticalScrollBar()
 	function self.setBindings(bin)
 		bindings = bin
 	end
+	function self.setApplication(app)
+		application = app
+	end
+	self.type = "VerticalScrollBar"
 	return self
 end

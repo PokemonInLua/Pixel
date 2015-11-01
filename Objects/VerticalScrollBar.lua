@@ -155,7 +155,7 @@ function VerticalScrollBar()
 	function self.setParent(par)
 		parent = par
 	end
-	function self.callPArent(method,...)
+	function self.callParent(method,...)
 		if parent[method] then
 			parent[method](...)
 		end
@@ -168,5 +168,9 @@ function VerticalScrollBar()
 	function self.setBindings(bin)
 		bindings = bin
 	end
+	function self.setApplication(app)
+		application = app
+	end
+	self.type = "VerticalScrollBar"
 	return self
 end

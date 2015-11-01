@@ -1,8 +1,15 @@
 term.clear()
 os.loadAPI("Pixel/Pixel")
-lay = Pixel.Layout(1,1,50,17,colors.white,false,true)
-button = Pixel.Button(3,4)
-input = {
+lay = Pixel.Layout({
+	x=1,
+	y=1,
+	width=50,
+	height=40,
+	color=colors.white,
+	transparent=false,
+	isActive=true,
+	})
+button = Pixel.Button({
 	x = 3,
 	y = 4,
 	width = 4,
@@ -15,14 +22,43 @@ input = {
 	textColorOnPress = colors.white,
 	backgroundColorOnPress = colors.cyan,
 	onLeftClick = function(self) term.clear() self.move(math.random(1,40),math.random(1,10)) end,
-	onRightClick = function(self) term.clear() self.callParent("move",2,2) end,
-}
-button.set(input)
+	onRightClick = function(self) end,
+})
 lay.addChild(button)
-lay.draw()
+button1 = Pixel.Button({
+	x = 3,
+	y = 30,
+	width = 4,
+	height = 3,
+	xText = 2,
+	yText = 2,
+	text = "OK",
+	textColor = colors.orange,
+	backgroundColor = colors.black,
+	textColorOnPress = colors.white,
+	backgroundColorOnPress = colors.cyan,
+	onLeftClick = function(self) term.clear() self.move(math.random(1,40),math.random(1,10)) end,
+	onRightClick = function(self) end,
+})
+lay.addChild(button1)
+scrollBar = Pixel.VerticalScrollBar({
+	x = 51,
+	y = 1,
+	height = 19,
+	totalHeight = 40,
+	bgColor = colors.cyan,
+	fgColor = colors.white,
+	bgButton = colors.white,
+	fgButton = colors.cyan,
+	percentage = 0,
+	update = lay.verticalScroll,
+	interval = 100/40,
+})
 
 while true do
-	lay.event(os.pullEvent())
-	--term.clear()
 	lay.draw()
+	scrollBar.draw()
+	local event = {os.pullEvent()}
+	scrollBar.event(event)
+	lay.event(event)
 end

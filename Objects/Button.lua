@@ -5,7 +5,7 @@
 	Description: The button module
 ]]--
 
-function Button()
+function Button(parameters)
 	--Private--
 	local x = x or 1
 	local y = y or 1
@@ -25,6 +25,7 @@ function Button()
 	local finalX = xOffset + x
 	local finalY = yOffset + y
 	local parent = {}
+	local application = {}
 
 	--Public--
 	local self = {}
@@ -99,11 +100,26 @@ function Button()
 	end
 	self.type = "Button"
 	self.canRun = false
-	function self.callParent(method,...)
-		parent[method](...)
-	end
 	function self.setParent(par)
 		parent = par
 	end
+	function self.callParent(method,...)
+		if parent[method] then
+			parent[method](...)
+		end
+	end
+	function self.callApplication(method,...)
+		if application[method] then
+			application[method](...)
+		end
+	end
+	function self.setApplication(app)
+		application = app
+	end
+	function self.setBindings(bin)
+		bindings = bin
+	end
+	--Constructor
+	self.set(parameters)
 	return self
 end
