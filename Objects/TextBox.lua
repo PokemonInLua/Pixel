@@ -25,11 +25,13 @@ function TextBox()
 	local finalY = yOffset + y
 	local function wordWrap()
 		local lines = {}
+		local currLine = 1
 		local pos = 1
 		while true do 
 			local char = text:sub(pos,pos)
 			if char == "\n" then
-
+				pos = pos+1
+				currLine = 
 			elseif true then
 
 			end
