@@ -59,6 +59,20 @@ local function wordWrap()
 	end
 	return lines
 end
+function wordWrap()
+	local actualWidth = width-1
+	local lines = {}
+	local currLine = 1
+	local spaces = {}
+	local space = 1
+	for token in text:gmatch("^[%a%c%d]+") do
+		spaces[#spaces+1] = token
+	end
+	for token in text:gmatch("[%a%c%d]+") do
+		if token 
+	end
+end
+
 
 ok,err = pcall(wordWrap)
 file = fs.open("error","w")
