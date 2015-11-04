@@ -23,17 +23,38 @@ function TextBox()
 	local yOffset = 0
 	local finalX = xOffset + x
 	local finalY = yOffset + y
-	local function wordWrap()
-		local lines = {}
-		local currLine = 1
-		local pos = 1
-		while true do 
-			local char = text:sub(pos,pos)
-			if char == "\n" then
-				pos = pos+1
-				currLine = 
-			elseif true then
 
+	function wordWrap()
+		local actualWidth = width-1
+		local lines = {}
+		local line = 1
+		local pos = 1
+		local rest = text
+		while true do
+			local currText = rest:sub(1,actualWidth)
+			if #currText < actualWidth then
+				lines[line] = currText
+				return lines
+			end
+			local start = currText:find("\n")
+			if start then
+				lines[line] = rest:sub(1,start-1)
+				line = line+1
+				rest = rest:sub(start+1,-1)
+			elseif currText:find("%s") then
+				local hasHappened = false
+				for i=#currText,1,-1 do
+					if currText:sub(i,i) == " " and not hasHappened then
+						lines[line] = currText:sub(1,i)
+						rest = rest:sub(i+1,-1)
+						line = line+1
+						hasHappened = true
+					end
+				end
+			else
+				lines[line] = currText
+				rest = rest:sub(#currText+1,-1)
+				line = line+1
 			end
 		end
 	end

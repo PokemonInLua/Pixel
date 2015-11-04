@@ -102,3 +102,4 @@ for i,v in pairs(second) do
 	print(v)
 end
 print(secondTime)
+print(os.clock()," ",os.clock()," ",os.clock())
