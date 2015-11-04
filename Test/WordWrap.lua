@@ -7,14 +7,8 @@ local function wordWrap()
 	local pos = 1
 	lines[currLine] = ""
 	local doRun = true
-	while true do 
+	while doRun do 
 		local char = text:sub(pos,pos)
-		print("start")
-		print(char)
-		print(pos)
-		print(lines[currLine])
-		print("end")
-		read()
 		if char == "" then doRun = false end
 		if char == "\n" then
 			pos = pos+1
@@ -36,7 +30,7 @@ local function wordWrap()
 			local word = char
 			local lPos = pos+1
 			local doRunSub
-			while true do
+			while doRunSub do
 				local lChar = text:sub(lPos,lPos)
 				if lChar == "\n" or lChar == " " then
 					doRunSub = false
@@ -46,9 +40,6 @@ local function wordWrap()
 				end
 			end
 			pos = pos+#word
-			print("---")
-			print("Word: "..tostring(word))
-			print("---")
 			if #lines[currLine] + #word > actualWidth then
 				currLine = currLine+1
 				lines[currLine] = word
@@ -59,26 +50,55 @@ local function wordWrap()
 	end
 	return lines
 end
-function wordWrap()
+function AnotherWordWrap()
 	local actualWidth = width-1
 	local lines = {}
-	local currLine = 1
-	local spaces = {}
-	local space = 1
-	for token in text:gmatch("^[%a%c%d]+") do
-		spaces[#spaces+1] = token
-	end
-	for token in text:gmatch("[%a%c%d]+") do
-		if token 
+	local line = 1
+	local pos = 1
+	local rest = text
+	while true do
+		local currText = rest:sub(1,actualWidth)
+		if #currText < actualWidth then
+			lines[line] = currText
+			return lines
+		end
+		local start = currText:find("\n")
+		if start then
+			lines[line] = rest:sub(1,start-1)
+			line = line+1
+			rest = rest:sub(start+1,-1)
+		elseif currText:find("%s") then
+			local hasHappened = false
+			for i=#currText,1,-1 do
+				if currText:sub(i,i) == " " and not hasHappened then
+					lines[line] = currText:sub(1,i)
+					rest = rest:sub(i+1,-1)
+					line = line+1
+					hasHappened = true
+				end
+			end
+		else
+			lines[line] = currText
+			rest = rest:sub(#currText+1,-1)
+			line = line+1
+		end
 	end
 end
 
+local time = os.clock()
+local first = wordWrap()
+local firstTime = os.clock()-time
 
-ok,err = pcall(wordWrap)
-file = fs.open("error","w")
-file.write(err)
-file.close()
-if not ok then print(err) end
-for i,v in pairs(err) do
+local time = os.clock()
+local second = AnotherWordWrap()
+local secondTime = os.clock()-time
+
+for i,v in pairs(first) do
 	print(v)
 end
+print(firstTime)
+
+for i,v in pairs(second) do
+	print(v)
+end
+print(secondTime)
