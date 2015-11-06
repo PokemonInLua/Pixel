@@ -23,8 +23,7 @@ function TextBox()
 	local yOffset = 0
 	local finalX = xOffset + x
 	local finalY = yOffset + y
-
-	function wordWrap()
+	local function wordWrap()
 		local actualWidth = width-1
 		local lines = {}
 		local line = 1
@@ -58,11 +57,14 @@ function TextBox()
 			end
 		end
 	end
-
+	local function isOnScreen()
+		local termWidth, termHeight = term.getSize()
+		if 
+	end
 	--Public
 	local self = {}
 	function self.draw(isPressed)
-		if (finalX <= 51 or finalX+width-1 >= 1) and (finalY <= 51 or finalY+height-1 >= 1) then
+		if isOnScreen then
 			paintutils.drawFilledBox(finalX,finalY,finalX+width-1,finalY+height-1,bgColor)
 			if text == "" then 
 				term.setCursorPos(finalX,finalY)
