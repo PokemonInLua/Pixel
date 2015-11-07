@@ -59,12 +59,15 @@ function TextBox()
 	end
 	local function isOnScreen()
 		local termWidth, termHeight = term.getSize()
-		if 
+		if x+width-1 >= 1 or y+height-1 >= 1 or x <= termWidth or y <= termHeight then
+			return true
+		end
+		return false
 	end
 	--Public
 	local self = {}
 	function self.draw(isPressed)
-		if isOnScreen then
+		if isOnScreen() then
 			paintutils.drawFilledBox(finalX,finalY,finalX+width-1,finalY+height-1,bgColor)
 			if text == "" then 
 				term.setCursorPos(finalX,finalY)
