@@ -1,13 +1,14 @@
 --[[
-	Name: 
+	Name: TextBox
 	Author: Wassil Janssen a.k.a. Creator
 	Licence: GNU GENERAL PUBLIC LICENSE
-	Description:
+	Description: A textBox, mate
 ]]--
 
 function TextBox(args)
 	--Private
 	local self = {}
+	local scroll = 0
 	local x = 1
 	local y = 1
 	local bgColor = 1
@@ -24,20 +25,21 @@ function TextBox(args)
 	local yOffset = 0
 	local finalX = xOffset + x
 	local finalY = yOffset + y
+	local wrapped = {}
 	local SB = ScrollBar({
 		x = x+width-1,
 		y = y,
 		parent = self,
 		height = height,
-		totalHeight = totalHeight, --IDK
+		totalHeight = #wrapped, --IDK
 		bgColor = bgColor,
 		fgColor = textColor,
 		bgButton = fgColor,
 		fgButton = bgColor,
 		percentage = 0,
-		update = update,
+		update = self.verticalScroll or function() end,
 		bindings = bindings,
-		interval = interval,
+		interval = 100/(#wrapped-height),
 	})
 	local function wordWrap()
 		local actualWidth = width-1
@@ -83,13 +85,21 @@ function TextBox(args)
 	--Public
 	function self.draw(isPressed)
 		if isOnScreen() then
+			wrapped = wordWrap()
 			paintutils.drawFilledBox(finalX,finalY,finalX+width-2,finalY+height-1,bgColor)
+			SB.draw()
 			if text == "" then 
 				term.setCursorPos(finalX,finalY)
 				term.setTextColor(helpTextColor)
 				term.write(helpText)
 			else
-				
+				for i,v in pairs(wrapped) do
+					local pos = i+y-1+scroll
+					if y <= pos and pos <= y+width-1 then
+						term.setCursorPos(x,pos)
+						term.write()
+					end
+				end
 			end
 		end
 	end
@@ -103,20 +113,48 @@ function TextBox(args)
 		return {
 			x = x,
 			y = y,
-			text = text,
+			bgColor = bgColor,
 			textColor = textColor,
-			backgroundColor = backgroundColor,
+			helpTextColor = helpTextColor,
+			width = width,
+			height = height,
+			helpText = helpText ,
+			text = text ,
+			bindings = bindings ,
+			parent = parent ,
+			application = application ,
 		}
 	end
 	function self.set(targs)
 		x = targs.x or x
 		y = targs.y or y
-		text = targs.text or text
+		bgColor = targs.bgColor or bgColor
 		textColor = targs.textColor or textColor
-		backgroundColor = targs.backgroundColor or backgroundColor
+		helpTextColor = targs.helpTextColor or helpTextColor
+		width = targs.width or width
+		height = targs.height or height
+		helpText = targs.helpText or helpText
+		text = targs.text or text
+		bindings = targs.bindings or bindings
+		parent = targs.parent or parent
+		application = targs.application or application
 		finalX = xOffset + x
 		finalY = yOffset + y
-		SB.set()
+		SB.set({
+		x = x+width-1,
+		y = y,
+		parent = self,
+		height = height,
+		totalHeight = #wrapped, --IDK
+		bgColor = bgColor,
+		fgColor = textColor,
+		bgButton = fgColor,
+		fgButton = bgColor,
+		percentage = 0,
+		update = self.verticalScroll,
+		bindings = bindings,
+		interval = 100/(#wrapped-height),
+	})
 	end
 	function self.setOffset(xOffsetT,yOffsetT)
 		xOffset = xOffsetT
@@ -125,7 +163,7 @@ function TextBox(args)
 		finalY = yOffset + y
 	end
 	self.type = ""
-	function self.event(...)
+	function self.event(event)
 
 	end
 	function self.run()
@@ -136,6 +174,9 @@ function TextBox(args)
 	end
 	function self.setApplication(app)
 		application = app
+	end
+	function self.verticalScroll(percentage)
+
 	end
 	--Constructor
 	self.set(args)
