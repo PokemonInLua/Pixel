@@ -29,9 +29,9 @@ function VerticalScrollBar(parameters)
 	local interval = 1
 	--Public
 	local self = {}
-	function self.draw(isPressed)
+	function self.draw()
 		size = math.floor(height*height/totalHeight)
-		pos = math.ceil(percentage*(height-(size+2))/100)
+		pos = math.abs(math.ceil(percentage*(height-(size+2))/100))
 		term.setCursorPos(x,y)
 		term.setBackgroundColor(bgButton)
 		term.setTextColor(fgButton)

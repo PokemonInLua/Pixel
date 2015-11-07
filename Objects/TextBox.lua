@@ -137,26 +137,29 @@ function TextBox(args)
 		height = targs.height or height
 		helpText = targs.helpText or helpText
 		text = targs.text or text
+		if targs.text then
+			wrapped = wordWrap()
+		end
 		bindings = targs.bindings or bindings
 		parent = targs.parent or parent
 		application = targs.application or application
 		finalX = xOffset + x
 		finalY = yOffset + y
 		SB.set({
-		x = x+width-1,
-		y = y,
-		parent = self,
-		height = height,
-		totalHeight = #wrapped, --IDK
-		bgColor = bgColor,
-		fgColor = textColor,
-		bgButton = fgColor,
-		fgButton = bgColor,
-		percentage = 0,
-		update = self.verticalScroll,
-		bindings = bindings,
-		interval = 100/(#wrapped-height),
-	})
+			x = x+width-1,
+			y = y,
+			parent = self,
+			height = height,
+			totalHeight = #wrapped, --IDK
+			bgColor = bgColor,
+			fgColor = textColor,
+			bgButton = fgColor,
+			fgButton = bgColor,
+			percentage = 0,
+			update = self.verticalScroll,
+			bindings = bindings,
+			interval = 100/(#wrapped-height),
+		})
 	end
 	function self.setOffset(xOffsetT,yOffsetT)
 		xOffset = xOffsetT
