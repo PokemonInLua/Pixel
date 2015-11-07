@@ -9,12 +9,13 @@ textbox = Pixel.TextBox({
 	width = 20,
 	height = 7,
 	helpText = "wow",
-	text = "Hi, bruce! How is your day going? SHlagagagagagaagagagagagagagagagaga fjsdfsdf sdf sd fsd f   werwerwerwerwerwe werwerwe  wqrqwrqwr r Hi, bruce! How is your day going? SHlagagagagagaagagagagagagagagagaga fjsdfsdf sdf sd fsd f   werwerwerwerwerwe werwerwe  wqrqwrqwr r",
+	text = "Wow",
 	bindings = {},
 	parent = {},
 	application = {},
 })
 
-textbox.draw()
-term.setCursorPos(60,60)
-read()
+while true do
+	textbox.draw()
+	textbox.event({os.pullEvent()})
+end
