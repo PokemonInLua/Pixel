@@ -857,7 +857,7 @@ function TextBox(args)
 			else
 				for i,v in pairs(wrapped) do
 					local pos = i+y-1+scroll
-					if y <= pos and pos <= y+width-1 then
+					if y <= pos and pos <= y+height-1 then
 						term.setCursorPos(x,pos)
 						term.write(v)
 					end
@@ -929,10 +929,31 @@ function TextBox(args)
 	end
 	self.type = ""
 	function self.event(event)
-
+		if event[1] == "mouse_click" then
+			if x <= event[3] and event[3] <= x+width-1 and y <= event[4] and event[4] <= y+height-1 then
+				if event[3] == x+width-1 then
+					SB.event(event)
+				else
+					self.run()
+				end
+			end
+		elseif event[1] == "mouse_drag" then
+			if x <= event[3] and event[3] <= x+width-1 and y <= event[4] and event[4] <= y+height-1 then
+				if event[3] == x+width-1 then
+					SB.event(event)
+				else
+					self.run()
+				end
+			end
+		end
 	end
 	function self.run()
-
+		local cursorXY={1,1}
+		local textPos = #text
+		while true do
+			local event = {coroutine.yield()}
+			wrapped = wordWrap()
+		end
 	end
 	function self.setParent(par)
 		parent = par
