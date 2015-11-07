@@ -4,8 +4,8 @@ sc.set({
 	x = 51,
 	y = 1,
 	parent = {},
-	height = 19,
-	totalHeight = 38,
+	height = 5,
+	totalHeight = 4,
 	bgColor = colors.green,
 	fgColor = colors.blue,
 	bgButton = colors.orange,
@@ -17,12 +17,12 @@ sc.set({
 	end
 })
 
---while true do
---	sc.draw()
---	sc.event({os.pullEvent()})
---end
+while true do
+	sc.draw()
+	sc.event({os.pullEvent()})
+end
 
-for totalHeight=50,19,-1 do
+--[[for totalHeight=50,19,-1 do
 	sc.set({
 		x = 51,
 		y = 1,
@@ -41,4 +41,4 @@ for totalHeight=50,19,-1 do
 	})
 	sc.draw()
 	sleep(1)
-end
+end]]--

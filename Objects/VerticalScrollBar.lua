@@ -16,7 +16,7 @@ function VerticalScrollBar(parameters)
 	local finalY = yOffset + y
 	local height = 3
 	local application = {}
-	local totalHeight = 0
+	local totalHeight = 5
 	local bgColor = 1
 	local fgColor = 1
 	local bgButton = 2
@@ -30,8 +30,6 @@ function VerticalScrollBar(parameters)
 	--Public
 	local self = {}
 	function self.draw()
-		size = math.floor(height*height/totalHeight)
-		pos = math.abs(math.ceil(percentage*(height-(size+2))/100))
 		term.setCursorPos(x,y)
 		term.setBackgroundColor(bgButton)
 		term.setTextColor(fgButton)
@@ -39,7 +37,9 @@ function VerticalScrollBar(parameters)
 		term.setCursorPos(x,y+height-1)
 		term.write("v")
 		paintutils.drawLine(x,y+1,x,y+height-2,bgColor)
-		paintutils.drawLine(x,y+pos+1,x,y+pos+size,fgColor)
+		if totalHeight > height then
+			paintutils.drawLine(x,y+pos+1,x,y+pos+size,fgColor)
+		end
 	end
 	function self.get()
 		return {
@@ -74,6 +74,8 @@ function VerticalScrollBar(parameters)
 		finalX = xOffset + x
 		finalY = yOffset + y
 		interval = targs.interval or interval
+		size = math.floor(height*height/totalHeight)
+		pos = math.abs(math.ceil(percentage*(height-(size+2))/100))
 	end
 	function self.setOffset(xOffsetT,yOffsetT)
 		xOffset = xOffsetT
@@ -83,6 +85,7 @@ function VerticalScrollBar(parameters)
 	end
 	self.type = ""
 	function self.event(event)
+		if not (totalHeight > height) then return end
 		if event[1] == "mouse_click" and event[2] == 1 then
 			if event[3] == x then
 				if y <= event[4] and event[4] <= y+height-1 then
@@ -176,6 +179,6 @@ function VerticalScrollBar(parameters)
 	end
 	self.type = "VerticalScrollBar"
 	--Constructor
-	self.set(parameters)
+	self.set(parameters or {})
 	return self
 end

@@ -153,7 +153,7 @@ function TextBox(args)
 			totalHeight = #wrapped, --IDK
 			bgColor = bgColor,
 			fgColor = textColor,
-			bgButton = fgColor,
+			bgButton = textColor,
 			fgButton = bgColor,
 			percentage = 0,
 			update = self.verticalScroll,
