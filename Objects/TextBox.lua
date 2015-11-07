@@ -26,7 +26,7 @@ function TextBox(args)
 	local finalX = xOffset + x
 	local finalY = yOffset + y
 	local wrapped = {}
-	local SB = ScrollBar({
+	local SB = VerticalScrollBar({
 		x = x+width-1,
 		y = y,
 		parent = self,
@@ -83,11 +83,13 @@ function TextBox(args)
 		return false
 	end
 	--Public
-	function self.draw(isPressed)
+	function self.draw()
 		if isOnScreen() then
 			wrapped = wordWrap()
 			paintutils.drawFilledBox(finalX,finalY,finalX+width-2,finalY+height-1,bgColor)
 			SB.draw()
+			term.setTextColor(textColor)
+			term.setBackgroundColor(bgColor)
 			if text == "" then 
 				term.setCursorPos(finalX,finalY)
 				term.setTextColor(helpTextColor)
@@ -97,7 +99,7 @@ function TextBox(args)
 					local pos = i+y-1+scroll
 					if y <= pos and pos <= y+width-1 then
 						term.setCursorPos(x,pos)
-						term.write()
+						term.write(v)
 					end
 				end
 			end

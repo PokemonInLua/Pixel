@@ -8,7 +8,7 @@ textbox = Pixel.TextBox({
 	helpTextColor = colors.cyan,
 	width = 20,
 	height = 7,
-	helpText = "",
+	helpText = "wow",
 	text = "Hi, bruce!",
 	bindings = {},
 	parent = {},
@@ -16,3 +16,5 @@ textbox = Pixel.TextBox({
 })
 
 textbox.draw()
+term.setCursorPos(60,60)
+read()
