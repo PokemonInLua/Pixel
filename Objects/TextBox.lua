@@ -41,12 +41,12 @@ function TextBox(args)
 		bindings = bindings,
 		interval = 100/(#wrapped-height),
 	})
-	local function wordWrap()
+	local function wordWrap(help)
 		local actualWidth = width-1
 		local lines = {}
 		local line = 1
 		local pos = 1
-		local rest = text
+		local rest = help == true and helpText or text
 		while true do
 			local currText = rest:sub(1,actualWidth)
 			if #currText < actualWidth then
@@ -90,10 +90,17 @@ function TextBox(args)
 			SB.draw()
 			term.setTextColor(textColor)
 			term.setBackgroundColor(bgColor)
-			if text == "" then 
+			if text == "" then
+				helpTextWrapped = wordWrap(true)
 				term.setCursorPos(finalX,finalY)
 				term.setTextColor(helpTextColor)
-				term.write(helpText)
+				for i,v in pairs(helpTextWrapped) do
+					local pos = i+y-1
+					if y <= pos and pos <= y+height-1 then
+						term.setCursorPos(x,pos)
+						term.write(v)
+					end
+				end
 			else
 				for i,v in pairs(wrapped) do
 					local pos = i+y-1+scroll
@@ -207,13 +214,16 @@ function TextBox(args)
 				elseif event[2] == 15 then --Tab
 
 				elseif event[2] == 14 then --Backspace
-					text = text:sub(0,textPos-1)..text:sub(textPos+1,-1)
+					text = text:sub(0,textPos-1)..text:sub(textPos+1)
 					textPos = textPos-1
 				elseif event[2] == 211 then
-					text = text:sub(0,textPos)..text:sub(textPos+2,-1)
+					text = text:sub(0,textPos)..text:sub(textPos+2)
+				elseif event[2] == 28 then --Enter
+					text = text:sub(0,textPos).."\n"..text:sub(textPos+1)
+					textPos = textPos+1
 				end
 			elseif event[1] == "char" then
-				text = text:sub(1,textPos)..event[2]..text:sub(textPos+1,-1)
+				text = text:sub(0,textPos)..event[2]..text:sub(textPos+1)
 				textPos = textPos+1
 			elseif event[1] == "mouse_click" then
 				if x <= event[3] and event[3] <= x+width-1 and y <= event[4] and event[4] <= y+height-1 then
