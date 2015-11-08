@@ -196,8 +196,10 @@ function TextBox(args)
 
 				elseif event[2] == 205 then --Right
 					textPos = textPos+1
+					if textPos > #text then textPos = #text end
 				elseif event[2] == 203 then --Left
 					textPos = textPos-1
+					if textPos < 0 then textPos = 0 end
 				elseif event[2] == 200 then --Up
 
 				elseif event[2] == 208 then --Down
@@ -205,10 +207,10 @@ function TextBox(args)
 				elseif event[2] == 15 then --Tab
 
 				elseif event[2] == 14 then --Backspace
-					text = text:sub(1,textPos-1)..text:sub(textPos+1,-1)
+					text = text:sub(0,textPos-1)..text:sub(textPos+1,-1)
 					textPos = textPos-1
 				elseif event[2] == 211 then
-					text = text:sub(1,textPos)..text:sub(textPos+2,-1)
+					text = text:sub(0,textPos)..text:sub(textPos+2,-1)
 				end
 			elseif event[1] == "char" then
 				text = text:sub(1,textPos)..event[2]..text:sub(textPos+1,-1)
