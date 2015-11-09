@@ -806,7 +806,7 @@ function TextBox(args)
 		local lines = {}
 		local line = 1
 		local pos = 1
-		local rest = help == true and helpText or text
+		local rest = help == true and helpText or text 
 		while true do
 			local currText = rest:sub(1,actualWidth)
 			if #currText < actualWidth then

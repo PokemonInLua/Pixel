@@ -1,5 +1,6 @@
 local width = 20
 local text = "On a \n beautiful sunny day, Creator was sick of Interact. This lead him to start a new project called Pixel. I know, the name's original."
+local text = "WOW \n wow"
 local function wordWrap()
 	local actualWidth = width-1
 	local lines = {}
