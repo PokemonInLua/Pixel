@@ -65,7 +65,8 @@ function AnotherWordWrap()
 		end
 		local start = currText:find("\n")
 		if start then
-			lines[line] = rest:sub(1,start-1)
+			lines[line] = rest:sub(1,start-1)print(lines[line])
+			print("--"..lines[line])
 			line = line+1
 			rest = rest:sub(start+1,-1)
 		elseif currText:find("%s") then
@@ -73,6 +74,7 @@ function AnotherWordWrap()
 			for i=#currText,1,-1 do
 				if currText:sub(i,i) == " " and not hasHappened then
 					lines[line] = currText:sub(1,i)
+					print(lines[line])
 					rest = rest:sub(i+1,-1)
 					line = line+1
 					hasHappened = true
@@ -80,9 +82,11 @@ function AnotherWordWrap()
 			end
 		else
 			lines[line] = currText
+			print(lines[line])
 			rest = rest:sub(#currText+1,-1)
 			line = line+1
 		end
+		print("-----")
 	end
 end
 
@@ -98,9 +102,9 @@ for i,v in pairs(first) do
 	print(v)
 end
 print(firstTime)
+print("--------")
 
 for i,v in pairs(second) do
 	print(v)
 end
 print(secondTime)
-print(os.clock()," ",os.clock()," ",os.clock())
