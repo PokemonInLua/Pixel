@@ -20,4 +20,4 @@ term.setbgColor(colors.white)
 term.clear()
 button.draw()
 term.setCursorPos(60,60)
-read()
+read() --wow
