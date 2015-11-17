@@ -60,5 +60,6 @@ function Name(x,y)
 	function self.setApplication(app)
 		application = app
 	end
+	self.type = ""
 	return self
 end

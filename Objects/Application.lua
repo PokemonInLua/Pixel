@@ -5,9 +5,46 @@
 	Description: An application holder for Pixel.
 ]]--
 
-function Name()
+function Name(parameters)
 	--Private
-	local layout = {}
+	local threads = {}
+	local screens = {}
+	local term_events = {
+		mouse_click = true,
+		mouse_drag = true,
+		mouse_up = true,
+		mouse_scroll = true,
+		char = true,
+		
+	}
+	--Public
+	local self = {}
+	self.type = "Application"
+	function self.event(event)
+		if event[1] == "monitor_touch"
+
+		elseif 
+	end
+	function self.run()
+
+	end
+	function self.addScreen(destination,scr)
+
+	end
+	function self.set()
+
+	end
+	function self.get()
+
+	end
+	function self.addThread()
+
+	end
+
+	--Constructor
+end
+--[=[
+local layout = {}
 	local bindings = {}
 	local doRun = true
 	--Public
@@ -51,4 +88,4 @@ function Name()
 		doRun = false
 	end
 	return self
-end
+	]=]--
