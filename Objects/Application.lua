@@ -10,23 +10,52 @@ function Name(parameters)
 	local threads = {}
 	local screens = {}
 	local term_events = {
-		mouse_click = true,
-		mouse_drag = true,
-		mouse_up = true,
-		mouse_scroll = true,
-		char = true,
-		
+		["key"] = true,
+		["mouse_click"] = true,
+		["paste"] = true,
+		["char"] = true,
+		["mouse_scroll"] = true,
+		["mouse_drag"] = true,
+		["key_up"] = true,
+		["mouse_up"] = true
 	}
+	local run = true
 	--Public
 	local self = {}
 	self.type = "Application"
 	function self.event(event)
 		if event[1] == "monitor_touch"
-
-		elseif 
+			if screens[event[2]] then
+				screens[event[2]].event(event)
+			end
+		elseif term_events[event[1]] then
+			if screens.term then
+				screens.term.event(event)
+			end
+		elseif event[1] == "terminate" then
+			--complicated
+		else
+			for i,v in pairs(screens) do
+				v.event(event)
+			end
+		end
 	end
-	function self.run()
-
+	function self.run(terminate)
+		run = true
+		local self_event = self.event
+		if terminate then
+			while run do
+				local event = {coroutine.yield()}
+				if event[1] == terminate then
+					break
+				end
+				self_event(event)
+			end
+		else
+			while run do
+				self_event({coroutine.yield()})
+			end
+		end
 	end
 	function self.addScreen(destination,scr)
 
@@ -40,7 +69,9 @@ function Name(parameters)
 	function self.addThread()
 
 	end
-
+	function self.quit()
+		run = false
+	end
 	--Constructor
 end
 --[=[
