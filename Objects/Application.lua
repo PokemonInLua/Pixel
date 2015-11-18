@@ -20,6 +20,12 @@ function Name(parameters)
 		["mouse_up"] = true
 	}
 	local run = true
+	local function runThreads(event)
+		for i,v in pairs(threads) do
+			coroutine.resume(v,unpack(event))
+		end
+	end
+	
 	--Public
 	local self = {}
 	self.type = "Application"
@@ -58,7 +64,12 @@ function Name(parameters)
 		end
 	end
 	function self.addScreen(destination,scr)
-
+		if peripheral.isPresent(destination) then
+			screens[destination] = scr
+			screens[destination].setParent(peripheral.wrap(destination))
+		else
+			return false, "Peripheral is not present!"
+		end
 	end
 	function self.set()
 

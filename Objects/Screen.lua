@@ -7,8 +7,15 @@
 
 function Screen(parameters)
 	--Private
-	
+	local parent = {}
+	local layout = {}
+	local function runThreads() end
 	--Public
+	local self = {}
+	self.type = "Screen"
+	function self.setParent(par)
+		parent = par
+	end
 
 	--COnstructor
 end
