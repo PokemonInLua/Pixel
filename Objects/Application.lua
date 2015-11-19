@@ -67,6 +67,7 @@ function Name(parameters)
 		if peripheral.isPresent(destination) then
 			screens[destination] = scr
 			screens[destination].setParent(peripheral.wrap(destination))
+			screens[destination].runThreads = runThreads
 		else
 			return false, "Peripheral is not present!"
 		end
@@ -77,57 +78,18 @@ function Name(parameters)
 	function self.get()
 
 	end
-	function self.addThread()
-
+	function self.addThread(th)
+		if type(th) == "thread" then
+			threads[#threads+1] = th
+		elseif type(th) == "function" then
+			local th = coroutine.wrap(th)
+			threads[#threads+1] = th
+		else
+			return false, "You have to provide a thread or a function."
+		end
 	end
 	function self.quit()
 		run = false
 	end
 	--Constructor
 end
---[=[
-local layout = {}
-	local bindings = {}
-	local doRun = true
-	--Public
-	local self = {}
-	function self.get(ser)
-		return {
-		layout = layout,
-		bindings = bindings,
-		}
-	end
-	function self.set(targs)
-		layout = targs.layout or layout
-		bindings = targs.bindings or bindings
-		if targs.layout then
-			layout.setApplication(self)
-			layout.setParent(self)
-		end
-	end
-	function self.addBinging(event,func)
-		if not bindings[event] then
-			bindings[event] = {}
-		end
-		bindings[event][#bindings[event]] = func
-	end
-	self.type = "application"
-	function self.run(...)
-		doRun = true
-		while doRun do
-			layout.set({isActive = true})
-			layout.draw()
-			event = {coroutine.yield()}
-			layout.event(event)
-			if bindings[event[1]] then
-				for i,v in pairs(bindings[event[1]]) do
-					v(event)
-				end
-			end
-		end
-	end
-	function self.quit()
-		doRun = false
-	end
-	return self
-	]=]--

@@ -16,6 +16,8 @@ function Screen(parameters)
 	function self.setParent(par)
 		parent = par
 	end
-
-	--COnstructor
-end
+	function self.runThreads(event)
+		-- a dummy function
+	end
+	--Constructor
+end 
