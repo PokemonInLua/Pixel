@@ -50,6 +50,7 @@ function Application(parameters)
 	end
 	function self.run(terminate)
 		run = true
+		self.draw()
 		local self_event = self.event
 		if terminate then
 			while run do
@@ -65,7 +66,7 @@ function Application(parameters)
 				self_event(event)
 			end
 		end
-	end Im in a browser...
+	end
 	function self.addScreen(destination,scr)
 		if peripheral.isPresent(destination) then
 			screens[destination] = scr
@@ -106,6 +107,11 @@ function Application(parameters)
 	end
 	function self.quit()
 		run = false
+	end
+	function self.draw()
+		for i,v in pairs(screens) do
+			v.draw()
+		end
 	end
 	--Constructor
 	self.set(parameters or {})

@@ -45,5 +45,10 @@ function Screen(parameters)
 	function self.setParent(par)
 		parent = par
 	end
+	function self.draw()
+		if layout.draw then
+			layout.draw()
+		end
+	end
 	--Constructor
 end
