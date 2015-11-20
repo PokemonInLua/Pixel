@@ -22,11 +22,9 @@ function Application(parameters)
 	local run = true
 	local function runThreads(event)
 		for i,v in pairs(threads) do
-			print(coroutine.resume(v,unpack(event)))
-			print(coroutine.status(v))
-			print("guau")
+			coroutine.resume(v,unpack(event))
+			coroutine.status(v)
 		end
-		print("huh?")
 	end
 	
 	--Public
@@ -49,7 +47,6 @@ function Application(parameters)
 			end
 		end
 		runThreads(event)
-		print("wow")
 	end
 	function self.run(terminate)
 		run = true
@@ -73,7 +70,7 @@ function Application(parameters)
 		if peripheral.isPresent(destination) then
 			screens[destination] = scr
 			screens[destination].setParent(peripheral.wrap(destination))
-			screens[destination].runThreads = runThreads
+			screens[destination].runThreads(runThreads)
 		else
 			return false, "Peripheral is not present!"
 		end
