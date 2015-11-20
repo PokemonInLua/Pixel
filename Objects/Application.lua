@@ -5,7 +5,7 @@
 	Description: An application holder for Pixel.
 ]]--
 
-function Name(parameters)
+function Application(parameters)
 	--Private
 	local threads = {}
 	local screens = {}
@@ -22,15 +22,18 @@ function Name(parameters)
 	local run = true
 	local function runThreads(event)
 		for i,v in pairs(threads) do
-			coroutine.resume(v,unpack(event))
+			print(coroutine.resume(v,unpack(event)))
+			print(coroutine.status(v))
+			print("guau")
 		end
+		print("huh?")
 	end
 	
 	--Public
 	local self = {}
 	self.type = "Application"
 	function self.event(event)
-		if event[1] == "monitor_touch"
+		if event[1] == "monitor_touch" then
 			if screens[event[2]] then
 				screens[event[2]].event(event)
 			end
@@ -45,6 +48,8 @@ function Name(parameters)
 				v.event(event)
 			end
 		end
+		runThreads(event)
+		print("wow")
 	end
 	function self.run(terminate)
 		run = true
@@ -59,7 +64,8 @@ function Name(parameters)
 			end
 		else
 			while run do
-				self_event({coroutine.yield()})
+				local event = {coroutine.yield()}
+				self_event(event)
 			end
 		end
 	end
@@ -72,17 +78,29 @@ function Name(parameters)
 			return false, "Peripheral is not present!"
 		end
 	end
-	function self.set()
-
+	function self.set(tabl)
+		if tabl.threads then
+			for i,v in pairs(tabl.threads) do
+				self.addThread(v)
+			end
+		end
+		if tabl.screens then
+			for i,v in pairs(tabl.screens) do
+				self.addScreen(v)
+			end
+		end
 	end
 	function self.get()
-
+		return {
+			threads = threads,
+			screens = screens,
+		}
 	end
 	function self.addThread(th)
 		if type(th) == "thread" then
 			threads[#threads+1] = th
 		elseif type(th) == "function" then
-			local th = coroutine.wrap(th)
+			local th = coroutine.create(th)
 			threads[#threads+1] = th
 		else
 			return false, "You have to provide a thread or a function."
@@ -92,4 +110,8 @@ function Name(parameters)
 		run = false
 	end
 	--Constructor
+	self.set(parameters or {})
+
+	--Final stage
+	return self
 end
