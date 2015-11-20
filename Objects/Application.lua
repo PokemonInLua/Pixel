@@ -65,12 +65,13 @@ function Application(parameters)
 				self_event(event)
 			end
 		end
-	end
+	end Im in a browser...
 	function self.addScreen(destination,scr)
 		if peripheral.isPresent(destination) then
 			screens[destination] = scr
 			screens[destination].setParent(peripheral.wrap(destination))
 			screens[destination].runThreads(runThreads)
+			screens[destination].setApplication()
 		else
 			return false, "Peripheral is not present!"
 		end

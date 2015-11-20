@@ -13,6 +13,7 @@ function Screen(parameters)
 	local onEvent = {}
 	--Public
 	local self = {}
+	local parent = {}
 
 	self.type = "Screen"
 	function self.setApplication(app)
@@ -27,7 +28,9 @@ function Screen(parameters)
 				v(self,event)
 			end
 		end
+		term.redirect(parent)
 		layout.event(event)
+		term.redirect(term.native())
 	end
 	function self.setLayout(lay)
 		layout = lay
@@ -38,6 +41,9 @@ function Screen(parameters)
 		else
 			onEvent[event][#onEvent[event]] = handle
 		end
+	end
+	function self.setParent(par)
+		parent = par
 	end
 	--Constructor
 end
