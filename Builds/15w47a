@@ -41,7 +41,7 @@ function Application(parameters)
 	self.type = "Application"
 	function self.event(event)
 		if event[1] == "monitor_touch" then
-			if screens[event[2]] then
+			if screens[event[2]] then 
 				screens[event[2]].event(event)
 			end
 		elseif term_events[event[1]] then
@@ -59,6 +59,7 @@ function Application(parameters)
 	end
 	function self.run(terminate)
 		run = true
+		self.draw()
 		local self_event = self.event
 		if terminate then
 			while run do
@@ -76,10 +77,16 @@ function Application(parameters)
 		end
 	end
 	function self.addScreen(destination,scr)
-		if peripheral.isPresent(destination) then
+		if destination == "term" then
+			screens[destination] = scr
+			screens[destination].setParent(term.native())
+			screens[destination].runThreads(runThreads)
+			screens[destination].setApplication()
+		elseif peripheral.isPresent(destination) then
 			screens[destination] = scr
 			screens[destination].setParent(peripheral.wrap(destination))
-			screens[destination].runThreads = runThreads
+			screens[destination].runThreads(runThreads)
+			screens[destination].setApplication()
 		else
 			return false, "Peripheral is not present!"
 		end
@@ -114,6 +121,11 @@ function Application(parameters)
 	end
 	function self.quit()
 		run = false
+	end
+	function self.draw()
+		for i,v in pairs(screens) do
+			v.draw()
+		end
 	end
 	--Constructor
 	self.set(parameters or {})
@@ -827,20 +839,58 @@ end
 
 function Screen(parameters)
 	--Private
-	local parent = {}
 	local layout = {}
+	local Application = {}
 	local function runThreads() end
+	local onEvent = {}
 	--Public
 	local self = {}
+	local parent = {}
+
 	self.type = "Screen"
+	function self.setApplication(app)
+		Application = app
+	end
+	function self.runThreads(func)
+		runThreads = func
+	end
+	function self.event(event)
+		if onEvent[event[1]] then
+			for i,v in pairs(onEvent[event[1]]) do
+				v(self,event)
+			end
+		end
+		term.redirect(parent)
+		layout.event(event)
+		term.redirect(term.native())
+	end
+	function self.setLayout(lay)
+		layout = lay
+	end
+	function self.addEvent(event,handle)
+		if not onEvent[event] then
+			onEvent[event] = {handle}
+		else
+			onEvent[event][#onEvent[event]] = handle
+		end
+	end
 	function self.setParent(par)
 		parent = par
 	end
-	function self.runThreads(event)
-		-- a dummy function
+	function self.draw()
+		if layout.draw then
+			layout.draw()
+		end
+	end
+	function self.set(tabl)
+		tabl = type(tabl) == "table" and tabl or {}
+		layout = tabl.layout or layout
 	end
 	--Constructor
-end 
+	self.set(parameters)
+
+	return self
+end
 
 --[[
 	Name: TextBox

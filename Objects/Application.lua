@@ -68,7 +68,12 @@ function Application(parameters)
 		end
 	end
 	function self.addScreen(destination,scr)
-		if peripheral.isPresent(destination) then
+		if destination == "term" then
+			screens[destination] = scr
+			screens[destination].setParent(term.native())
+			screens[destination].runThreads(runThreads)
+			screens[destination].setApplication()
+		elseif peripheral.isPresent(destination) then
 			screens[destination] = scr
 			screens[destination].setParent(peripheral.wrap(destination))
 			screens[destination].runThreads(runThreads)

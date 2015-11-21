@@ -50,5 +50,12 @@ function Screen(parameters)
 			layout.draw()
 		end
 	end
+	function self.set(tabl)
+		tabl = type(tabl) == "table" and tabl or {}
+		layout = tabl.layout or layout
+	end
 	--Constructor
+	self.set(parameters)
+
+	return self
 end
