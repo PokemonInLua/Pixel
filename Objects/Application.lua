@@ -32,7 +32,7 @@ function Application(parameters)
 	self.type = "Application"
 	function self.event(event)
 		if event[1] == "monitor_touch" then
-			if screens[event[2]] then
+			if screens[event[2]] then 
 				screens[event[2]].event(event)
 			end
 		elseif term_events[event[1]] then
